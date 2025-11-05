@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import { DarkModeProvider } from "../context/DarkModeContext";
 import CookieConsent from "../components/CookieConsent";
+import DarkModePattern from "../components/DarkModePattern";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -36,7 +37,10 @@ export default function RootLayout({
       >
         <DarkModeProvider>
           <CartProvider>
-            {children}
+            <DarkModePattern />
+            <div className="relative z-10">
+              {children}
+            </div>
             <CookieConsent />
           </CartProvider>
         </DarkModeProvider>
