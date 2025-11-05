@@ -5,18 +5,18 @@ const Product = require('./models/Product');
 dotenv.config();
 
 const imageUpdates = {
-  'Designer Silk Saree': 'https://images.pexels.com/photos/3927392/pexels-photo-3927392.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Banarasi Silk Saree': 'https://images.pexels.com/photos/8442133/pexels-photo-8442133.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Anarkali Suit': 'https://images.pexels.com/photos/8442136/pexels-photo-8442136.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Punjabi Suit': 'https://images.pexels.com/photos/6069004/pexels-photo-6069004.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Lehenga Choli': 'https://images.pexels.com/photos/14704788/pexels-photo-14704788.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Kurta Pajama Set': 'https://images.pexels.com/photos/8442129/pexels-photo-8442129.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Sherwani': 'https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Nehru Jacket': 'https://images.pexels.com/photos/4666751/pexels-photo-4666751.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Pathani Suit': 'https://images.pexels.com/photos/8442140/pexels-photo-8442140.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Bandhani Dupatta': 'https://images.pexels.com/photos/6069042/pexels-photo-6069042.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Cotton Kurti': 'https://images.pexels.com/photos/8442135/pexels-photo-8442135.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'Chanderi Saree': 'https://images.pexels.com/photos/9736200/pexels-photo-9736200.jpeg?auto=compress&cs=tinysrgb&w=800'
+  'Designer Silk Saree': 'https://m.media-amazon.com/images/I/71vkKWXZJ7L._SY741_.jpg',
+  'Banarasi Silk Saree': 'https://m.media-amazon.com/images/I/81qE5H3qp5L._SY741_.jpg',
+  'Anarkali Suit': 'https://m.media-amazon.com/images/I/71K8gKZ5NFL._SY741_.jpg',
+  'Punjabi Suit': 'https://m.media-amazon.com/images/I/81JvBQ0HKIL._SY741_.jpg',
+  'Lehenga Choli': 'https://m.media-amazon.com/images/I/81fVLhkXvNL._SY741_.jpg',
+  'Kurta Pajama Set': 'https://m.media-amazon.com/images/I/61F8XrEOoVL._SY741_.jpg',
+  'Sherwani': 'https://m.media-amazon.com/images/I/71UXVLqYqtL._SY741_.jpg',
+  'Nehru Jacket': 'https://m.media-amazon.com/images/I/71Bqvp7FGHL._SY741_.jpg',
+  'Pathani Suit': 'https://m.media-amazon.com/images/I/71yIW3YxEWL._SY741_.jpg',
+  'Bandhani Dupatta': 'https://m.media-amazon.com/images/I/81gxXVQYQfL._SY741_.jpg',
+  'Cotton Kurti': 'https://m.media-amazon.com/images/I/71qT5vfVfnL._SY741_.jpg',
+  'Chanderi Saree': 'https://m.media-amazon.com/images/I/71DqNXoq8CL._SY741_.jpg'
 };
 
 const updateProductImages = async () => {
