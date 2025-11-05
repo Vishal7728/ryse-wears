@@ -94,8 +94,17 @@ export default function Home() {
       const response = await fetch(`${API_URL}/api/products`);
       const data = await response.json();
       
-      // Get first 8 products for homepage
-      const products = data.slice(0, 8).map((product: MongoProduct) => ({
+      // Filter Indian traditional wear first, then other products
+      const traditionalWear = data.filter((p: MongoProduct) => p.category === 'Traditional');
+      const otherProducts = data.filter((p: MongoProduct) => p.category !== 'Traditional');
+      
+      // Combine: prioritize traditional wear (max 6) + other products (fill remaining)
+      const featured = [
+        ...traditionalWear.slice(0, 6),
+        ...otherProducts.slice(0, 8 - Math.min(6, traditionalWear.length))
+      ].slice(0, 8);
+      
+      const products = featured.map((product: MongoProduct) => ({
         id: product._id,
         name: product.name,
         price: product.price,
@@ -220,7 +229,10 @@ export default function Home() {
       {/* Featured Products */}
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white animate-fade-in">Featured Products</h2>
+          <div>
+            <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white animate-fade-in">Indian Traditional Wear</h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">Celebrate Indian heritage with our exclusive collection</p>
+          </div>
           <Link 
             href="/products"
             className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors duration-300"

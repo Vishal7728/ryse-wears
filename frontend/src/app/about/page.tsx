@@ -2,6 +2,7 @@
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Image from 'next/image';
 
 export default function AboutPage() {
   return (
@@ -32,26 +33,54 @@ export default function AboutPage() {
               innovative materials to create pieces that stand the test of time.
             </p>
           </div>
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96" />
+          <div className="relative rounded-xl overflow-hidden shadow-2xl h-96">
+            <Image
+              src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=800&q=80"
+              alt="RYSE Wears Store"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="text-center">
-            <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+          <div className="text-center group">
+            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
+              <Image
+                src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=200&q=80"
+                alt="Sustainable Materials"
+                fill
+                className="object-cover"
+              />
+            </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Sustainable Materials</h3>
             <p className="text-gray-600 dark:text-gray-300">
               We source eco-friendly fabrics and materials to minimize our environmental impact.
             </p>
           </div>
-          <div className="text-center">
-            <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+          <div className="text-center group">
+            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
+              <Image
+                src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=200&q=80"
+                alt="Ethical Production"
+                fill
+                className="object-cover"
+              />
+            </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Ethical Production</h3>
             <p className="text-gray-600 dark:text-gray-300">
               All our products are made in facilities that ensure fair wages and safe working conditions.
             </p>
           </div>
-          <div className="text-center">
-            <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+          <div className="text-center group">
+            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
+              <Image
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=200&q=80"
+                alt="Timeless Design"
+                fill
+                className="object-cover"
+              />
+            </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Timeless Design</h3>
             <p className="text-gray-600 dark:text-gray-300">
               Our pieces are designed to last, reducing the need for frequent replacements.
