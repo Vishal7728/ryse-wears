@@ -22,17 +22,8 @@ interface Order {
 
 export default function UserDashboard() {
   const router = useRouter();
-  
-  // Check auth and get user data
-  const token = localStorage.getItem('token');
-  const userData = localStorage.getItem('user');
-  
-  if (!token || !userData) {
-    router.push('/login');
-    return null;
-  }
-  
-  const user: User = JSON.parse(userData);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   
   // In a real app, you would fetch user orders from the backend
   // For now, we'll use mock data
@@ -42,7 +33,25 @@ export default function UserDashboard() {
     { id: 3, total_amount: 59.99, status: 'Shipped', created_at: '2023-05-18' },
   ];
   
-  const loading = false;
+  useEffect(() => {
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      // Check auth and get user data
+      const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('user');
+      
+      if (!token || !userData) {
+        router.push('/login');
+        return;
+      }
+      
+      // Defer state update to avoid cascading renders
+      setTimeout(() => {
+        setUser(JSON.parse(userData));
+        setLoading(false);
+      }, 0);
+    }
+  }, [router]);
 
   if (loading) {
     return (

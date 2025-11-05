@@ -9,8 +9,9 @@ import Footer from '../../components/Footer';
 export default function CartPage() {
   const { items, total, removeItem, updateQuantity } = useCart();
 
-  const handleQuantityChange = (id: number, quantity: number) => {
+  const handleQuantityChange = (id: number | string, quantity: number) => {
     if (quantity < 1) return;
+    // Ensure the ID is passed correctly to the context function
     updateQuantity(id, quantity);
   };
 
@@ -71,14 +72,14 @@ export default function CartPage() {
                         <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center">
                             <button 
-                              onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                              onClick={() => handleQuantityChange(item.id as number | string, item.quantity - 1)}
                               className="px-3 py-1 bg-gray-200 rounded-l-md"
                             >
                               -
                             </button>
                             <span className="px-4 py-1 bg-gray-100">{item.quantity}</span>
                             <button 
-                              onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                              onClick={() => handleQuantityChange(item.id as number | string, item.quantity + 1)}
                               className="px-3 py-1 bg-gray-200 rounded-r-md"
                             >
                               +
@@ -86,7 +87,7 @@ export default function CartPage() {
                           </div>
                           
                           <button
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.id as number | string)}
                             className="text-red-600 hover:text-red-800"
                           >
                             Remove
