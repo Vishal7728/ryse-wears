@@ -14,11 +14,56 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex flex-col group">
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-gray-900 dark:text-white transition-all duration-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transform group-hover:scale-105">
-              RYSE Wears
-            </h1>
-            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-sans transition-colors duration-300 group-hover:text-indigo-500">Elevate Your Style</p>
+          <Link href="/" className="flex items-center space-x-2 group">
+            {/* RYSE Logo */}
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12">
+              <svg
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              >
+                {/* Outer Circle with Gradient */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  className="stroke-indigo-600 dark:stroke-indigo-400"
+                  strokeWidth="3"
+                  fill="url(#logo-gradient)"
+                />
+                
+                {/* R Letter */}
+                <path
+                  d="M35 30 L35 70 L50 70 L50 50 L60 70 M35 30 L50 30 C55 30 60 35 60 40 C60 45 55 50 50 50 L35 50"
+                  className="stroke-white dark:stroke-gray-900"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+                
+                {/* Gradient Definition */}
+                <defs>
+                  <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" className="text-indigo-600 dark:text-indigo-500" stopColor="currentColor" />
+                    <stop offset="100%" className="text-purple-600 dark:text-purple-400" stopColor="currentColor" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-full bg-indigo-500/20 dark:bg-indigo-400/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-2xl font-display font-bold text-gray-900 dark:text-white transition-all duration-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                RYSE Wears
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-sans transition-colors duration-300 group-hover:text-indigo-500 hidden sm:block">
+                Elevate Your Style
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
