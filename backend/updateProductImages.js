@@ -5,18 +5,18 @@ const Product = require('./models/Product');
 dotenv.config();
 
 const imageUpdates = {
-  'Designer Silk Saree': 'https://m.media-amazon.com/images/I/71vkKWXZJ7L._SY741_.jpg',
-  'Banarasi Silk Saree': 'https://m.media-amazon.com/images/I/81qE5H3qp5L._SY741_.jpg',
-  'Anarkali Suit': 'https://m.media-amazon.com/images/I/71K8gKZ5NFL._SY741_.jpg',
-  'Punjabi Suit': 'https://m.media-amazon.com/images/I/81JvBQ0HKIL._SY741_.jpg',
-  'Lehenga Choli': 'https://m.media-amazon.com/images/I/81fVLhkXvNL._SY741_.jpg',
-  'Kurta Pajama Set': 'https://m.media-amazon.com/images/I/61F8XrEOoVL._SY741_.jpg',
-  'Sherwani': 'https://m.media-amazon.com/images/I/71UXVLqYqtL._SY741_.jpg',
-  'Nehru Jacket': 'https://m.media-amazon.com/images/I/71Bqvp7FGHL._SY741_.jpg',
-  'Pathani Suit': 'https://m.media-amazon.com/images/I/71yIW3YxEWL._SY741_.jpg',
-  'Bandhani Dupatta': 'https://m.media-amazon.com/images/I/81gxXVQYQfL._SY741_.jpg',
-  'Cotton Kurti': 'https://m.media-amazon.com/images/I/71qT5vfVfnL._SY741_.jpg',
-  'Chanderi Saree': 'https://m.media-amazon.com/images/I/71DqNXoq8CL._SY741_.jpg'
+  'Designer Silk Saree': 'https://placehold.co/600x800/red/white?text=Designer+Silk+Saree',
+  'Banarasi Silk Saree': 'https://placehold.co/600x800/0000FF/white?text=Banarasi+Silk+Saree',
+  'Anarkali Suit': 'https://placehold.co/600x800/FF1493/white?text=Anarkali+Suit',
+  'Punjabi Suit': 'https://placehold.co/600x800/FFD700/black?text=Punjabi+Suit',
+  'Lehenga Choli': 'https://placehold.co/600x800/8B0000/white?text=Lehenga+Choli',
+  'Kurta Pajama Set': 'https://placehold.co/600x800/F5F5DC/black?text=Kurta+Pajama',
+  'Sherwani': 'https://placehold.co/600x800/DAA520/white?text=Sherwani',
+  'Nehru Jacket': 'https://placehold.co/600x800/000000/white?text=Nehru+Jacket',
+  'Pathani Suit': 'https://placehold.co/600x800/808080/white?text=Pathani+Suit',
+  'Bandhani Dupatta': 'https://placehold.co/600x800/FF69B4/white?text=Bandhani+Dupatta',
+  'Cotton Kurti': 'https://placehold.co/600x800/87CEEB/black?text=Cotton+Kurti',
+  'Chanderi Saree': 'https://placehold.co/600x800/FFE4B5/black?text=Chanderi+Saree'
 };
 
 const updateProductImages = async () => {
