@@ -158,6 +158,31 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 transition-colors page-transition">
       <Header />
 
+      {/* Flash Deal Marquee Bar */}
+      <div className="bg-gradient-to-r from-red-600 via-orange-500 to-red-600 text-white py-3 overflow-hidden relative">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-shimmer"></div>
+        <div className="relative flex items-center">
+          <span className="inline-flex items-center px-4 py-1 bg-yellow-400 text-red-900 font-bold text-sm rounded-full mr-4 ml-4 animate-pulse">
+            🔥 FLASH DEAL
+          </span>
+          <div className="flex animate-marquee whitespace-nowrap">
+            <span className="mx-8 text-lg font-bold">⚡ UP TO 70% OFF on Western Wear!</span>
+            <span className="mx-8 text-lg font-bold">🎉 Limited Time: Premium Blazers ₹1,999 (Save ₹3,000)</span>
+            <span className="mx-8 text-lg font-bold">💥 Denim Jackets ₹999 Only - Hurry!</span>
+            <span className="mx-8 text-lg font-bold">🔥 Buy 2 Get 1 FREE on All Shirts</span>
+            <span className="mx-8 text-lg font-bold">⏰ Flash Sale Ends in 6 Hours!</span>
+            <span className="mx-8 text-lg font-bold">🛍️ Free Shipping on Orders Above ₹1,500</span>
+            {/* Duplicate for seamless loop */}
+            <span className="mx-8 text-lg font-bold">⚡ UP TO 70% OFF on Western Wear!</span>
+            <span className="mx-8 text-lg font-bold">🎉 Limited Time: Premium Blazers ₹1,999 (Save ₹3,000)</span>
+            <span className="mx-8 text-lg font-bold">💥 Denim Jackets ₹999 Only - Hurry!</span>
+            <span className="mx-8 text-lg font-bold">🔥 Buy 2 Get 1 FREE on All Shirts</span>
+            <span className="mx-8 text-lg font-bold">⏰ Flash Sale Ends in 6 Hours!</span>
+            <span className="mx-8 text-lg font-bold">🛍️ Free Shipping on Orders Above ₹1,500</span>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section - Full Viewport Banner with Auto-Change */}
       <div className="relative h-screen overflow-hidden">
         {/* Background Image */}
