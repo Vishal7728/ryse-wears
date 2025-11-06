@@ -106,7 +106,7 @@ export default function AboutPage() {
             {/* Image - Sustainable Materials */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=800&q=80"
+                src="/sustainable-materials.png"
                 alt="Sustainable Eco-Friendly Fabrics"
                 className="w-full h-full object-cover"
                 style={{ minHeight: '350px' }}
