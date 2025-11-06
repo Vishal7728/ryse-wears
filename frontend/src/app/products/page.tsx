@@ -177,7 +177,7 @@ export default function ProductsPage() {
         }
       ];
       setProducts(mockProducts);
-      setError('Using offline product catalog. Connect to see live inventory.');
+      setError('Using offline product catalog. Please ensure the backend is running at ' + API_URL + ' to see live inventory. Current API URL: ' + API_URL);
     } finally {
       setLoading(false);
     }
