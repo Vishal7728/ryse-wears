@@ -35,11 +35,45 @@ export default function AboutPage() {
           </div>
           <div className="relative rounded-xl overflow-hidden shadow-2xl h-96">
             <Image
-              src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=800&q=80"
-              alt="RYSE Wears Store"
+              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+              alt="RYSE Wears Fashion Store Interior"
               fill
               className="object-cover"
+              unoptimized
             />
+          </div>
+        </div>
+        
+        {/* Company Team Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Behind the Brand</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="relative rounded-xl overflow-hidden shadow-xl h-80">
+              <Image
+                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80"
+                alt="RYSE Wears Design Team at Work"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                <h3 className="text-white text-xl font-bold">Our Design Studio</h3>
+                <p className="text-white/90 text-sm">Where creativity meets sustainability</p>
+              </div>
+            </div>
+            <div className="relative rounded-xl overflow-hidden shadow-xl h-80">
+              <Image
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80"
+                alt="RYSE Wears Team Collaboration"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                <h3 className="text-white text-xl font-bold">Our Team</h3>
+                <p className="text-white/90 text-sm">Passionate about fashion and sustainability</p>
+              </div>
+            </div>
           </div>
         </div>
         
