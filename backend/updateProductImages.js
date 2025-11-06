@@ -5,18 +5,18 @@ const Product = require('./models/Product');
 dotenv.config();
 
 const imageUpdates = {
-  'Designer Silk Saree': 'https://placehold.co/600x800/red/white?text=Designer+Silk+Saree',
-  'Banarasi Silk Saree': 'https://placehold.co/600x800/0000FF/white?text=Banarasi+Silk+Saree',
-  'Anarkali Suit': 'https://placehold.co/600x800/FF1493/white?text=Anarkali+Suit',
-  'Punjabi Suit': 'https://placehold.co/600x800/FFD700/black?text=Punjabi+Suit',
-  'Lehenga Choli': 'https://placehold.co/600x800/8B0000/white?text=Lehenga+Choli',
-  'Kurta Pajama Set': 'https://placehold.co/600x800/F5F5DC/black?text=Kurta+Pajama',
-  'Sherwani': 'https://placehold.co/600x800/DAA520/white?text=Sherwani',
-  'Nehru Jacket': 'https://placehold.co/600x800/000000/white?text=Nehru+Jacket',
-  'Pathani Suit': 'https://placehold.co/600x800/808080/white?text=Pathani+Suit',
-  'Bandhani Dupatta': 'https://placehold.co/600x800/FF69B4/white?text=Bandhani+Dupatta',
-  'Cotton Kurti': 'https://placehold.co/600x800/87CEEB/black?text=Cotton+Kurti',
-  'Chanderi Saree': 'https://placehold.co/600x800/FFE4B5/black?text=Chanderi+Saree'
+  'Designer Silk Saree': 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800',
+  'Banarasi Silk Saree': 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=800',
+  'Anarkali Suit': 'https://images.unsplash.com/photo-1614095851165-d3e4b7e70b85?w=800',
+  'Punjabi Suit': 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800',
+  'Lehenga Choli': 'https://images.unsplash.com/photo-1595341595155-9f8cd95d3e5f?w=800',
+  'Kurta Pajama Set': 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=800',
+  'Sherwani': 'https://images.unsplash.com/photo-1606219592522-af678b8e0c8e?w=800',
+  'Nehru Jacket': 'https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=800',
+  'Pathani Suit': 'https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?w=800',
+  'Bandhani Dupatta': 'https://images.unsplash.com/photo-1610030469837-71c0f6be69a8?w=800',
+  'Cotton Kurti': 'https://images.unsplash.com/photo-1617138965535-b071a1e45290?w=800',
+  'Chanderi Saree': 'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800'
 };
 
 const updateProductImages = async () => {
