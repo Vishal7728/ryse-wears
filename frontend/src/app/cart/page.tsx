@@ -1,8 +1,8 @@
 'use client';
-'use client';
 
 import { useCart } from '../../context/CartContext';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -50,37 +50,40 @@ export default function CartPage() {
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <ul className="divide-y divide-gray-200">
                 {items.map((item) => (
-                  <li key={item.id} className="p-6">
+                  <li key={item.id} className="p-6 hover:bg-gray-50 transition-all duration-200 border border-gray-100 rounded-lg shadow-sm hover:shadow-md">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 w-24 h-24 bg-gray-200 rounded-md overflow-hidden">
-                        <img
+                      <div className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden shadow-md">
+                        <Image
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover"
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         />
                       </div>
                       
-                      <div className="ml-4 flex-1">
+                      <div className="ml-6 flex-1">
                         <div>
-                          <div className="flex justify-between">
+                          <div className="flex justify-between items-start">
                             <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-                            <p className="text-lg font-medium text-gray-900">₹{item.price.toFixed(2)}</p>
+                            <p className="text-lg font-bold text-indigo-600">₹{item.price.toFixed(2)}</p>
                           </div>
-                          <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                          <p className="mt-1 text-sm text-gray-500 line-clamp-2">{item.description}</p>
                         </div>
                         
                         <div className="mt-4 flex items-center justify-between">
-                          <div className="flex items-center">
+                          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
                             <button 
                               onClick={() => handleQuantityChange(item.id as number | string, item.quantity - 1)}
-                              className="px-3 py-1 bg-gray-200 rounded-l-md"
+                              className="px-3 py-1 bg-white hover:bg-gray-100 text-gray-600 transition-colors duration-200"
+                              disabled={item.quantity <= 1}
                             >
                               -
                             </button>
-                            <span className="px-4 py-1 bg-gray-100">{item.quantity}</span>
+                            <span className="px-4 py-1 bg-white text-gray-900 font-medium">{item.quantity}</span>
                             <button 
                               onClick={() => handleQuantityChange(item.id as number | string, item.quantity + 1)}
-                              className="px-3 py-1 bg-gray-200 rounded-r-md"
+                              className="px-3 py-1 bg-white hover:bg-gray-100 text-gray-600 transition-colors duration-200"
                             >
                               +
                             </button>
@@ -88,8 +91,11 @@ export default function CartPage() {
                           
                           <button
                             onClick={() => removeItem(item.id as number | string)}
-                            className="text-red-600 hover:text-red-800"
+                            className="flex items-center text-red-600 hover:text-red-800 transition-colors duration-200 group"
                           >
+                            <svg className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
                             Remove
                           </button>
                         </div>
