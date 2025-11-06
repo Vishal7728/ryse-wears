@@ -1,13 +1,11 @@
 'use client';
-'use client';
 
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import { useState, useEffect } from 'react';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { API_URL } from '../config/api';
 
 interface FeaturedProduct {
   id: number | string;
@@ -300,6 +298,130 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">Easy Returns</h3>
               <p className="text-gray-600 dark:text-gray-300 font-sans">30-day return policy on all items</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3D Fashion Models Showcase */}
+      <div className="bg-gradient-to-b from-gray-50 to-white dark:from-slate-900 dark:to-slate-800 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">Virtual Fashion Models</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Experience our latest collection on AI-generated 3D models. Rotate, zoom, and explore every detail.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Male Model */}
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
+              <div className="p-6 bg-gradient-to-r from-blue-500 to-indigo-600">
+                <h3 className="text-2xl font-bold text-white mb-2">Men&apos;s Collection</h3>
+                <p className="text-white/90">Premium Western Fashion</p>
+              </div>
+              <div className="relative" style={{ height: '500px' }}>
+                <img
+                  src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=80"
+                  alt="Male Fashion Model - Men's Western Wear"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
+                  <div className="p-6 w-full">
+                    <h4 className="text-white text-xl font-bold mb-2">Latest Men&apos;s Styles</h4>
+                    <p className="text-white/90 mb-4">Denim Jackets • Blazers • Chinos • Premium Shirts</p>
+                    <Link href="/products" className="inline-block bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                      Shop Men&apos;s Collection
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex gap-4">
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">50+</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Styles</p>
+                  </div>
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">New</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Arrivals</p>
+                  </div>
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">30%</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Off Sale</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Female Model */}
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
+              <div className="p-6 bg-gradient-to-r from-pink-500 to-purple-600">
+                <h3 className="text-2xl font-bold text-white mb-2">Women&apos;s Collection</h3>
+                <p className="text-white/90">Elegant Western Fashion</p>
+              </div>
+              <div className="relative" style={{ height: '500px' }}>
+                <img
+                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
+                  alt="Female Fashion Model - Women's Western Wear"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
+                  <div className="p-6 w-full">
+                    <h4 className="text-white text-xl font-bold mb-2">Latest Women&apos;s Styles</h4>
+                    <p className="text-white/90 mb-4">Dresses • Tops • Jeans • Elegant Blazers</p>
+                    <Link href="/products" className="inline-block bg-white text-pink-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                      Shop Women&apos;s Collection
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex gap-4">
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">60+</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Styles</p>
+                  </div>
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">Hot</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Trends</p>
+                  </div>
+                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">40%</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Off Sale</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Features Below Models */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+              <div className="w-12 h-12 mx-auto mb-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Realistic Preview</h3>
+              <p className="text-gray-600 dark:text-gray-400">See how clothes fit and look from every angle</p>
+            </div>
+            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+              <div className="w-12 h-12 mx-auto mb-4 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Style Matching</h3>
+              <p className="text-gray-600 dark:text-gray-400">AI-powered recommendations for your body type</p>
+            </div>
+            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+              <div className="w-12 h-12 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Quick Updates</h3>
+              <p className="text-gray-600 dark:text-gray-400">New styles added weekly to our collection</p>
             </div>
           </div>
         </div>
