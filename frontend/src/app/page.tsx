@@ -347,7 +347,7 @@ export default function Home() {
                 muted 
                 playsInline
               >
-                <source src="https://cdn.pixabay.com/video/2024/02/12/200363-913055076_large.mp4" type="video/mp4" />
+                <source src="/videos/RYSE_Wears_Brand_Showcase_Ad.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
@@ -371,7 +371,7 @@ export default function Home() {
                 muted 
                 playsInline
               >
-                <source src="https://cdn.pixabay.com/video/2023/05/18/163246-827624695_large.mp4" type="video/mp4" />
+                <source src="/videos/RYSE_Clothing_Ad_Generation.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">

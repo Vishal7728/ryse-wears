@@ -94,7 +94,7 @@ export default function AboutPage() {
                 muted 
                 playsInline
               >
-                <source src="https://cdn.pixabay.com/video/2022/12/21/143971-783022867_large.mp4" type="video/mp4" />
+                <source src="/videos/Factory_Tour_Video_Clothing_Production.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
@@ -113,7 +113,7 @@ export default function AboutPage() {
                 muted 
                 playsInline
               >
-                <source src="https://cdn.pixabay.com/video/2023/09/12/180043-864134913_large.mp4" type="video/mp4" />
+                <source src="https://cdn.pixabay.com/video/2024/03/15/204572-924820980_large.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
