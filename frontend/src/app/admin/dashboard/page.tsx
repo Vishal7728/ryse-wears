@@ -16,7 +16,6 @@ interface AnalyticsData {
 export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [customers, setCustomers] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,34 +47,7 @@ export default function AdminDashboard() {
       }
     };
 
-    const fetchCustomers = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          router.push('/login');
-          return;
-        }
-
-        const response = await fetch('http://localhost:5000/api/admin/customers', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch customers');
-        }
-
-        const data = await response.json();
-        setCustomers(data);
-      } catch (error) {
-        console.error('Error fetching customers:', error);
-      }
-    };
-
     fetchAnalytics();
-    fetchCustomers();
   }, [router]);
 
   // Prepare data for charts
@@ -218,7 +190,7 @@ export default function AdminDashboard() {
                   </dt>
                   <dd className="flex items-baseline">
                     <div className="text-2xl font-bold text-white">
-                      {customers.length}
+                      0
                     </div>
                   </dd>
                 </dl>
