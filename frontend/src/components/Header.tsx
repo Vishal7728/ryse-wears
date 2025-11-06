@@ -7,7 +7,19 @@ import { useState, useEffect } from 'react';
 export default function Header() {
   const { items } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [orderToast, setOrderToast] = useState<{ id: string } | null>(null);
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
+
+  useEffect(() => {
+    const onOrder = (e: any) => {
+      if (e?.detail?.status === 'paid') setOrderToast({ id: e.detail.id });
+      setTimeout(() => setOrderToast(null), 5000);
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('order:status', onOrder as any);
+      return () => window.removeEventListener('order:status', onOrder as any);
+    }
+  }, []);
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 sticky top-0 z-50">
@@ -174,6 +186,11 @@ export default function Header() {
           </div>
         )}
       </div>
+      {orderToast && (
+        <div className="fixed top-20 right-6 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50">
+          Payment successful! ID: {orderToast.id}
+        </div>
+      )}
     </header>
   );
 }

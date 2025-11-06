@@ -1,5 +1,5 @@
 // API Configuration
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://ryse-wears-backend.vercel.app';
 
 export const API_ENDPOINTS = {
   products: `${API_URL}/api/products`,

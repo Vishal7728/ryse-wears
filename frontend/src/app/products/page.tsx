@@ -1,14 +1,14 @@
 'use client';
-'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useCart } from '../../context/CartContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ProductCard from '../../components/ProductCard';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { API_URL } from '../../config/api';
+import { recordEvent, buildPreferences } from '../../utils/analytics';
 
 interface Product {
   id: string;
@@ -25,6 +25,7 @@ interface Product {
 }
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,6 +33,14 @@ export default function ProductsPage() {
   const [selectedGender, setSelectedGender] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const { addItem } = useCart();
+
+  // Initialize filters from URL parameters
+  useEffect(() => {
+    const genderParam = searchParams.get('gender');
+    if (genderParam && ['Men', 'Women', 'Unisex'].includes(genderParam)) {
+      setSelectedGender(genderParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchProducts();
@@ -89,8 +98,20 @@ export default function ProductsPage() {
         colors: product.colors,
         stock: product.stock
       }));
-      
-      setProducts(mappedProducts);
+
+      // Behavior-based boost
+      const prefs = buildPreferences();
+      const scored = mappedProducts
+        .map((p: Product) => {
+          const cat = p.category?.toLowerCase() || 'general';
+          const gender = p.gender || 'Unisex';
+          const score = (prefs.categoryScore[cat] || 0) + (prefs.categoryScore[p.subcategory || ''] || 0) + (prefs.genderScore[gender] || 0);
+          return { p, score };
+        })
+        .sort((a: { p: Product; score: number }, b: { p: Product; score: number }) => b.score - a.score)
+        .map((s: { p: Product; score: number }) => s.p);
+
+      setProducts(scored);
     } catch (err) {
       console.error('Error fetching products:', err);
       // Use fallback mock data when API fails
@@ -236,7 +257,7 @@ export default function ProductsPage() {
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); recordEvent('search', { query: e.target.value }); }}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
               />
             </div>
@@ -246,7 +267,7 @@ export default function ProductsPage() {
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setSelectedCategory(cat)}
+                  onClick={() => { setSelectedCategory(cat); recordEvent('filter_change', { type: 'category', value: cat }); }}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                     selectedCategory === cat
                       ? 'bg-indigo-600 text-white shadow-lg transform scale-105'
@@ -263,7 +284,7 @@ export default function ProductsPage() {
               {genders.map((gender) => (
                 <button
                   key={gender}
-                  onClick={() => setSelectedGender(gender)}
+                  onClick={() => { setSelectedGender(gender); recordEvent('filter_change', { type: 'gender', value: gender }); }}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                     selectedGender === gender
                       ? 'bg-purple-600 text-white shadow-lg transform scale-105'
@@ -292,7 +313,9 @@ export default function ProductsPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div key={product.id} className="animate-fade-in">
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         )}

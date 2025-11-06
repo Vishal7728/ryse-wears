@@ -6,8 +6,7 @@ import Image from 'next/image';
 import { useCart } from '../../../context/CartContext';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { API_URL } from '../../../config/api';
 
 interface Product {
   _id: string;

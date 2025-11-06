@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '../../context/CartContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { API_URL } from '../../config/api';
 
 declare global {
   interface Window {
@@ -133,7 +132,11 @@ export default function CheckoutPage() {
 
           if (verifyData.success) {
             clearCart();
-            alert(`Payment successful! Transaction ID: ${verifyData.payment_details.payment_id}`);
+            if (typeof window !== 'undefined') {
+              // Non-blocking toast notification
+              const evt = new CustomEvent('order:status', { detail: { status: 'paid', id: verifyData.payment_details.payment_id } });
+              window.dispatchEvent(evt);
+            }
             router.push('/');
           } else {
             alert('Payment verification failed. Please contact support.');

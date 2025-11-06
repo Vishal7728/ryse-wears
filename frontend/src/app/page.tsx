@@ -352,8 +352,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
                   <div className="p-6 w-full">
                     <h4 className="text-white text-xl font-bold mb-2">Latest Men&apos;s Styles</h4>
-                    <p className="text-white/90 mb-4">Denim Jackets • Blazers • Chinos • Premium Shirts</p>
-                    <Link href="/products" className="inline-block bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <p className="text-white/90 mb-4">Denim Jackets • Blazers • Chinos • Polo Shirts • Sneakers</p>
+                    <Link href="/products?gender=Men" className="inline-block bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                       Shop Men&apos;s Collection
                     </Link>
                   </div>
@@ -392,8 +392,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
                   <div className="p-6 w-full">
                     <h4 className="text-white text-xl font-bold mb-2">Latest Women&apos;s Styles</h4>
-                    <p className="text-white/90 mb-4">Dresses • Tops • Jeans • Elegant Blazers</p>
-                    <Link href="/products" className="inline-block bg-white text-pink-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <p className="text-white/90 mb-4">Maxi Dresses • Tops • Skinny Jeans • Cocktail Dresses</p>
+                    <Link href="/products?gender=Women" className="inline-block bg-white text-pink-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                       Shop Women&apos;s Collection
                     </Link>
                   </div>

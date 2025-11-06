@@ -1,5 +1,5 @@
 // src/services/api.ts
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { API_URL } from '../config/api';
 
 export interface Product {
   id: number | string;
@@ -20,7 +20,7 @@ export interface User {
 
 // Fetch all products
 export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(`${API_BASE_URL}/products`);
+  const response = await fetch(`${API_URL}/api/products`);
   if (!response.ok) {
     throw new Error('Failed to fetch products');
   }
@@ -29,7 +29,7 @@ export async function getProducts(): Promise<Product[]> {
 
 // Fetch product by ID
 export async function getProductById(id: number): Promise<Product> {
-  const response = await fetch(`${API_BASE_URL}/products/${id}`);
+  const response = await fetch(`${API_URL}/api/products/${id}`);
   if (!response.ok) {
     throw new Error('Failed to fetch product');
   }
@@ -38,7 +38,7 @@ export async function getProductById(id: number): Promise<Product> {
 
 // User login
 export async function login(email: string, password: string): Promise<User> {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+  const response = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function login(email: string, password: string): Promise<User> {
 
 // User registration
 export async function register(email: string, password: string): Promise<User> {
-  const response = await fetch(`${API_BASE_URL}/auth/register`, {
+  const response = await fetch(`${API_URL}/api/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
