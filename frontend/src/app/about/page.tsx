@@ -103,19 +103,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Video 2 - Quality Control */}
+            {/* Image - Sustainable Materials */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <video 
-                className="w-full h-full object-cover" 
+              <img
+                src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=800&q=80"
+                alt="Sustainable Eco-Friendly Fabrics"
+                className="w-full h-full object-cover"
                 style={{ minHeight: '350px' }}
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-              >
-                <source src="https://cdn.pixabay.com/video/2024/03/15/204572-924820980_large.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                 <h3 className="text-white text-xl font-bold mb-2">Sustainable Materials</h3>
                 <p className="text-white/90">Eco-friendly fabrics sourced from ethical suppliers</p>
