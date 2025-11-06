@@ -1,50 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useCart } from '../../context/CartContext';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import ProductCard from '../../components/ProductCard';
-import { API_URL } from '../../config/api';
-import { recordEvent, buildPreferences } from '../../utils/analytics';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  category?: string;
-  subcategory?: string;
-  gender?: string;
-  sizes?: string[];
-  colors?: string[];
-  stock?: number;
-}
+import ClientProductsPage from './ClientProductsPage';
 
 export default function ProductsPage() {
-  const searchParams = useSearchParams();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedGender, setSelectedGender] = useState<string>('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const { addItem } = useCart();
-
-  // Initialize filters from URL parameters
-  useEffect(() => {
-    const genderParam = searchParams.get('gender');
-    if (genderParam && ['Men', 'Women', 'Unisex'].includes(genderParam)) {
-      setSelectedGender(genderParam);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [selectedCategory, selectedGender, searchQuery]);
+  return (
+    <>
+      <Header />
+      <ClientProductsPage />
+      <Footer />
+    </>
+  );
+}
 
   const fetchProducts = async () => {
     try {
