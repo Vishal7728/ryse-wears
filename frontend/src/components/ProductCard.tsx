@@ -16,18 +16,21 @@ export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
 
   return (
-    <div className="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover-lift group dark:border dark:border-purple-500/20 relative">
+    <div className="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover-lift group dark:border dark:border-purple-500/20 relative">
       {/* Glowing border effect in dark mode */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 opacity-0 dark:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
       
       <Link href={`/products/${product.id}`} className="block relative z-10">
-        <div className="h-48 sm:h-56 md:h-64 bg-gray-200 dark:bg-slate-700/50 relative overflow-hidden">
+        <div className="relative bg-gray-200 dark:bg-slate-700/50 overflow-hidden">
+          <div className="relative w-full" style={{ paddingTop: '133%' }}>
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:rotate-2"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:rotate-1"
+            unoptimized
           />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           {/* RGB glow overlay in dark mode */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-cyan-500/10 opacity-0 dark:group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -40,7 +43,6 @@ export default function ProductCard({ product }: { product: Product }) {
         <Link href={`/products/${product.id}`}>
           <h3 className="text-lg font-display font-semibold text-gray-900 dark:text-white mt-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300 cursor-pointer">{product.name}</h3>
         </Link>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 font-sans">{product.description}</p>
         <div className="mt-4 flex justify-between items-center">
           <span className="text-xl font-bold text-gray-900 dark:text-white transform group-hover:scale-110 transition-transform duration-300 inline-block">₹{product.price.toFixed(2)}</span>
           <button 

@@ -59,6 +59,7 @@ export default function CartPage() {
                           width={96}
                           height={96}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                          unoptimized
                         />
                       </div>
                       
