@@ -76,6 +76,53 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+
+        {/* Manufacturing Process Video Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Manufacturing Process</h2>
+          <p className="text-center text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            Witness the craftsmanship and dedication that goes into every piece. From sustainable sourcing to ethical production.
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Video 1 - Production Process */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <video 
+                className="w-full h-full object-cover" 
+                style={{ minHeight: '350px' }}
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+              >
+                <source src="https://cdn.pixabay.com/video/2022/12/21/143971-783022867_large.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                <h3 className="text-white text-xl font-bold mb-2">Precision Craftsmanship</h3>
+                <p className="text-white/90">Each garment is carefully crafted by skilled artisans</p>
+              </div>
+            </div>
+
+            {/* Video 2 - Quality Control */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <video 
+                className="w-full h-full object-cover" 
+                style={{ minHeight: '350px' }}
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+              >
+                <source src="https://cdn.pixabay.com/video/2023/09/12/180043-864134913_large.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                <h3 className="text-white text-xl font-bold mb-2">Sustainable Materials</h3>
+                <p className="text-white/90">Eco-friendly fabrics sourced from ethical suppliers</p>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div className="text-center group">

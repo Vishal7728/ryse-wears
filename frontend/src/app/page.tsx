@@ -253,8 +253,8 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white animate-fade-in">Indian Traditional Wear</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">Celebrate Indian heritage with our exclusive collection</p>
+            <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white animate-fade-in">Featured Collection</h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">Discover our handpicked selection of premium Western wear</p>
           </div>
           <Link 
             href="/products"
@@ -323,6 +323,66 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">Easy Returns</h3>
               <p className="text-gray-600 dark:text-gray-300 font-sans">30-day return policy on all items</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Video Banner Section */}
+      <div className="bg-gray-50 dark:bg-slate-900 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">Experience RYSE Wears</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Watch our latest collection showcase and discover the fashion that defines you</p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Video 1 - Fashion Showcase */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+              <video 
+                className="w-full h-full object-cover" 
+                style={{ minHeight: '400px' }}
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+              >
+                <source src="https://cdn.pixabay.com/video/2024/02/12/200363-913055076_large.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
+                <div className="p-8 w-full">
+                  <h3 className="text-white text-2xl font-bold mb-2">Spring/Summer Collection 2024</h3>
+                  <p className="text-white/90 mb-4">Explore the latest trends in Western fashion</p>
+                  <Link href="/products" className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                    Shop Collection
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Video 2 - Brand Story */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+              <video 
+                className="w-full h-full object-cover" 
+                style={{ minHeight: '400px' }}
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+              >
+                <source src="https://cdn.pixabay.com/video/2023/05/18/163246-827624695_large.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
+                <div className="p-8 w-full">
+                  <h3 className="text-white text-2xl font-bold mb-2">Sustainable Fashion</h3>
+                  <p className="text-white/90 mb-4">Quality craftsmanship meets eco-friendly materials</p>
+                  <Link href="/about" className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                    Learn More
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
