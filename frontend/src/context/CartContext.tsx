@@ -5,7 +5,6 @@ import { Product } from '../services/api';
 
 interface CartItem extends Product {
   quantity: number;
-  // Allow both id and _id for different product formats
   _id?: string;
 }
 

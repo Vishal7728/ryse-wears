@@ -11,7 +11,6 @@ export default function CookieConsent() {
   });
 
   const initializePersonalization = () => {
-    // Get user location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -30,7 +29,6 @@ export default function CookieConsent() {
   };
 
   const initializeAnalytics = () => {
-    // Track user behavior
     const userActivity = {
       visits: parseInt(localStorage.getItem('visitCount') || '0') + 1,
       lastVisit: new Date().toISOString(),
@@ -43,7 +41,6 @@ export default function CookieConsent() {
     const checkConsent = () => {
       const consent = localStorage.getItem('cookieConsent');
       if (!consent) {
-        // Use a timeout to avoid calling setState directly in the effect
         setTimeout(() => {
           setShowBanner(true);
         }, 0);
@@ -51,7 +48,6 @@ export default function CookieConsent() {
         const savedPreferences = JSON.parse(consent);
         setPreferences(savedPreferences);
         
-        // Initialize tracking if user has consented
         if (savedPreferences.personalization) {
           initializePersonalization();
         }
@@ -115,7 +111,6 @@ export default function CookieConsent() {
                 By accepting, you agree to our use of cookies for analytics and personalization.
               </p>
               
-              {/* Cookie Preferences */}
               <div className="space-y-2">
                 <label className="flex items-center space-x-3 text-sm">
                   <input

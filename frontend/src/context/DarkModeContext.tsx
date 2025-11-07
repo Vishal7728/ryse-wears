@@ -10,7 +10,6 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined
 
 export function DarkModeProvider({ children }: { children: ReactNode }) {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
-    // Initialize from system preference on mount
     if (typeof window !== 'undefined') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
@@ -18,7 +17,6 @@ export function DarkModeProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     const handleChange = (e: MediaQueryListEvent) => {
@@ -27,11 +25,9 @@ export function DarkModeProvider({ children }: { children: ReactNode }) {
 
     mediaQuery.addEventListener('change', handleChange);
 
-    // Cleanup listener on unmount
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Apply dark mode class to document
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');

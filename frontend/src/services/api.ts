@@ -1,4 +1,3 @@
-// src/services/api.ts
 import { API_URL } from '../config/api';
 
 export interface Product {
@@ -18,7 +17,6 @@ export interface User {
   token: string;
 }
 
-// Fetch all products
 export async function getProducts(): Promise<Product[]> {
   const response = await fetch(`${API_URL}/api/products`);
   if (!response.ok) {
@@ -27,7 +25,6 @@ export async function getProducts(): Promise<Product[]> {
   return response.json();
 }
 
-// Fetch product by ID
 export async function getProductById(id: number): Promise<Product> {
   const response = await fetch(`${API_URL}/api/products/${id}`);
   if (!response.ok) {
@@ -36,7 +33,6 @@ export async function getProductById(id: number): Promise<Product> {
   return response.json();
 }
 
-// User login
 export async function login(email: string, password: string): Promise<User> {
   const response = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
@@ -53,7 +49,6 @@ export async function login(email: string, password: string): Promise<User> {
   return response.json();
 }
 
-// User registration
 export async function register(email: string, password: string): Promise<User> {
   const response = await fetch(`${API_URL}/api/auth/register`, {
     method: 'POST',
