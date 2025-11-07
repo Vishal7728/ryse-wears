@@ -85,20 +85,14 @@ export default function Home() {
   const fetchFeaturedProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/products`);
+      const response = await fetch(`${API_URL}/api/products?limit=8`);
       const data = await response.json();
       
-      // Filter Indian traditional wear first, then other products
-      const traditionalWear = data.filter((p: MongoProduct) => p.category === 'Traditional');
-      const otherProducts = data.filter((p: MongoProduct) => p.category !== 'Traditional');
+      // Handle both old and new API response formats
+      const productsData = data.products || data;
       
-      // Combine: prioritize traditional wear (max 6) + other products (fill remaining)
-      const featured = [
-        ...traditionalWear.slice(0, 6),
-        ...otherProducts.slice(0, 8 - Math.min(6, traditionalWear.length))
-      ].slice(0, 8);
-      
-      const products = featured.map((product: MongoProduct) => ({
+      // Limit to 8 products for better performance
+      const products = productsData.slice(0, 8).map((product: MongoProduct) => ({
         id: product._id,
         name: product.name,
         price: product.price,
@@ -114,35 +108,35 @@ export default function Home() {
       setFeaturedProducts([
         {
           id: 1,
-          name: 'Summer T-Shirt',
-          price: 599,
-          description: 'Comfortable cotton fabric',
-          image: '/vercel.svg',
+          name: 'Classic White T-Shirt',
+          price: 799,
+          description: 'Premium cotton crew neck t-shirt',
+          image: '/images/products/male/classic-white-tshirt.jpg',
           category: 'Tops'
         },
         {
           id: 2,
-          name: 'Designer Jeans',
+          name: 'Slim Fit Jeans',
           price: 1899,
-          description: 'Slim fit premium denim',
-          image: '/vercel.svg',
+          description: 'Modern slim fit jeans with stretch fabric',
+          image: '/images/products/male/slim-fit-jeans.jpg',
           category: 'Bottoms'
         },
         {
           id: 3,
-          name: 'Casual Hoodie',
-          price: 1499,
-          description: 'Soft fleece material',
-          image: '/vercel.svg',
-          category: 'Tops'
+          name: 'Black Leather Jacket',
+          price: 4999,
+          description: 'Genuine leather biker jacket',
+          image: '/images/products/male/black-leather-jacket.jpg',
+          category: 'Outerwear'
         },
         {
           id: 4,
-          name: 'Summer Shorts',
-          price: 799,
-          description: 'Lightweight and comfortable',
-          image: '/vercel.svg',
-          category: 'Bottoms'
+          name: 'Off-Shoulder Top',
+          price: 1199,
+          description: 'Trendy off-shoulder top with elastic neckline',
+          image: '/images/products/female/off-shoulder-top.jpg',
+          category: 'Tops'
         }
       ]);
     } finally {

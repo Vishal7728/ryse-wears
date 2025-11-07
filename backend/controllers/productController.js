@@ -1,9 +1,9 @@
 const Product = require('../models/Product');
 
-// Get all products with optional filtering
+// Get all products with optional filtering and pagination
 const getProducts = async (req, res) => {
   try {
-    const { category, subcategory, gender, minPrice, maxPrice, search } = req.query;
+    const { category, subcategory, gender, minPrice, maxPrice, search, page = 1, limit = 20 } = req.query;
     
     // Build query object
     let query = {};
@@ -27,8 +27,31 @@ const getProducts = async (req, res) => {
       ];
     }
     
-    const products = await Product.find(query).sort({ created_at: -1 });
-    res.json(products);
+    // Convert page and limit to numbers
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+    const skip = (pageNumber - 1) * limitNumber;
+    
+    // Get total count for pagination
+    const total = await Product.countDocuments(query);
+    
+    // Get products with pagination
+    const products = await Product.find(query)
+      .select('_id name price image category subcategory gender') // Only select necessary fields
+      .sort({ created_at: -1 })
+      .skip(skip)
+      .limit(limitNumber);
+    
+    res.json({
+      products,
+      pagination: {
+        currentPage: pageNumber,
+        totalPages: Math.ceil(total / limitNumber),
+        totalProducts: total,
+        hasNextPage: pageNumber < Math.ceil(total / limitNumber),
+        hasPrevPage: pageNumber > 1
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -37,7 +60,9 @@ const getProducts = async (req, res) => {
 // Get product by ID
 const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    // Select only necessary fields for better performance
+    const product = await Product.findById(req.params.id)
+      .select('_id name price image description category subcategory gender sizes colors stock');
     
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });

@@ -6,15 +6,19 @@ dotenv.config();
 const testConnection = async () => {
   try {
     console.log('Testing MongoDB connection...');
-    console.log('MONGODB_URL:', process.env.MONGODB_URL);
+    console.log('MONGODB_URL:', process.env.MONGODB_URL ? 'SET' : 'NOT SET');
     
-    // Connect to MongoDB
+    // Simple connection without deprecated options
     await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+      socketTimeoutMS: 45000,
     });
     
     console.log('✅ MongoDB Connected successfully!');
+    
+    // Test if we can access collections
+    const collections = await mongoose.connection.db.listCollections().toArray();
+    console.log('Available collections:', collections.map(c => c.name));
     
     // Close connection
     await mongoose.connection.close();
@@ -22,6 +26,23 @@ const testConnection = async () => {
     process.exit(0);
   } catch (error) {
     console.error('❌ MongoDB Connection Error:', error.message);
+    console.error('Error code:', error.code);
+    console.error('Error name:', error.name);
+    
+    // Provide specific troubleshooting steps
+    console.log('\n🔧 Troubleshooting Steps:');
+    console.log('1. Check if your IP (157.48.92.47) is whitelisted in MongoDB Atlas');
+    console.log('2. Verify username: kumaradik37_db_user');
+    console.log('3. Verify password: Vishal4624');
+    console.log('4. Check if the database "ryse_wears" exists');
+    console.log('5. Ensure user has "Read and write to any database" permissions');
+    
+    console.log('\n🌐 To whitelist your IP:');
+    console.log('1. Go to https://cloud.mongodb.com');
+    console.log('2. Navigate to Network Access > Add IP Address');
+    console.log('3. Add: 157.48.92.47');
+    console.log('4. Or add 0.0.0.0/0 to allow all IPs (less secure)');
+    
     process.exit(1);
   }
 };

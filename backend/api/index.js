@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('../config/db');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -15,6 +16,10 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from frontend public directory
+// This is needed for product images to load correctly on Vercel
+app.use('/images', express.static(path.join(__dirname, '../../frontend/public/images')));
 
 // Import routes
 const productRoutes = require('../routes/products');

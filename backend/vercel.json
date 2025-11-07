@@ -8,6 +8,10 @@
   ],
   "routes": [
     {
+      "src": "/images/(.*)",
+      "dest": "/../frontend/public/images/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "api/index.js"
     }

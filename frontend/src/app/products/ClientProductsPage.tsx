@@ -51,6 +51,9 @@ export default function ClientProductsPage() {
       if (selectedGender !== 'All') params.append('gender', selectedGender);
       if (searchQuery) params.append('search', searchQuery);
       
+      // Add limit for better performance
+      params.append('limit', '20');
+      
       const response = await fetch(`${API_URL}/api/products?${params.toString()}`, {
         method: 'GET',
         headers: {
@@ -64,8 +67,11 @@ export default function ClientProductsPage() {
       
       const data = await response.json();
       
+      // Handle both old and new API response formats
+      const productsData = data.products || data;
+      
       // Map MongoDB products to frontend format
-      const mappedProducts = data.map((product: MongoProduct) => ({
+      const mappedProducts = productsData.map((product: MongoProduct) => ({
         id: product._id,
         name: product.name,
         price: product.price,
@@ -79,24 +85,12 @@ export default function ClientProductsPage() {
         stock: product.stock
       }));
 
-      // Behavior-based boost
-      const prefs = buildPreferences();
-      const scored = mappedProducts
-        .map((p: Product) => {
-          const cat = p.category?.toLowerCase() || 'general';
-          const gender = p.gender || 'Unisex';
-          const score = (prefs.categoryScore[cat] || 0) + (prefs.categoryScore[p.subcategory || ''] || 0) + (prefs.genderScore[gender] || 0);
-          return { p, score };
-        })
-        .sort((a: { p: Product; score: number }, b: { p: Product; score: number }) => b.score - a.score)
-        .map((s: { p: Product; score: number }) => s.p);
-
-      setProducts(scored);
+      setProducts(mappedProducts);
     } catch (err) {
       console.error('Error fetching products:', err);
       // Use fallback mock data when API fails
       const mockProducts: Product[] = [
-        // Male Products (25 items)
+        // Male Products (8 items for better performance)
         {
           id: '1',
           name: 'Classic White T-Shirt',
@@ -178,7 +172,7 @@ export default function ClientProductsPage() {
           gender: 'Men'
         },
         
-        // Female Products (sample 8 for mock data)
+        // Female Products (8 items)
         {
           id: '9',
           name: 'Off-Shoulder Top',
@@ -259,48 +253,6 @@ export default function ClientProductsPage() {
           subcategory: 'Skirts',
           gender: 'Women'
         },
-        
-        // Accessories (sample 4 for mock data)
-        {
-          id: '17',
-          name: 'Leather Crossbody Bag',
-          price: 2499,
-          description: 'Genuine leather crossbody bag with adjustable strap. Perfect for hands-free convenience.',
-          image: '/images/products/accessories/leather-crossbody-bag.jpg',
-          category: 'Bags',
-          subcategory: 'Crossbody Bags',
-          gender: 'Unisex'
-        },
-        {
-          id: '18',
-          name: 'Baseball Cap',
-          price: 599,
-          description: 'Classic baseball cap with adjustable strap. Perfect for casual and sporty looks.',
-          image: '/images/products/accessories/baseball-cap.jpg',
-          category: 'Hats',
-          subcategory: 'Caps',
-          gender: 'Unisex'
-        },
-        {
-          id: '19',
-          name: 'Sneakers',
-          price: 2999,
-          description: 'Comfortable sneakers with cushioned sole. Perfect for daily wear and casual outings.',
-          image: '/images/products/accessories/sneakers.jpg',
-          category: 'Shoes',
-          subcategory: 'Casual Shoes',
-          gender: 'Unisex'
-        },
-        {
-          id: '20',
-          name: 'Tote Bag',
-          price: 1299,
-          description: 'Spacious tote bag with sturdy handles. Perfect for work or shopping trips.',
-          image: '/images/products/accessories/tote-bag.jpg',
-          category: 'Bags',
-          subcategory: 'Tote Bags',
-          gender: 'Unisex'
-        }
       ];
       setProducts(mockProducts);
       // setError('Using offline product catalog. Please ensure the backend is running at ' + API_URL + ' to see live inventory. Current API URL: ' + API_URL);
