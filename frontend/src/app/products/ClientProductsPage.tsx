@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { useCart } from '../../context/CartContext';
 import ProductCard from '../../components/ProductCard';
 import { API_URL } from '../../config/api';
@@ -23,7 +22,6 @@ interface Product {
 }
 
 export default function ClientProductsPage() {
-  const searchParams = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,14 +29,6 @@ export default function ClientProductsPage() {
   const [selectedGender, setSelectedGender] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const { addItem } = useCart();
-
-  // Initialize filters from URL parameters
-  useEffect(() => {
-    const genderParam = searchParams.get('gender');
-    if (genderParam && ['Men', 'Women', 'Unisex'].includes(genderParam)) {
-      setSelectedGender(genderParam);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     fetchProducts();
