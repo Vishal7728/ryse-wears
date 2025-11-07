@@ -32,10 +32,6 @@ export default function ProductDetailPage() {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    fetchProduct();
-  }, [params.id]);
-
   const fetchProduct = async () => {
     try {
       setLoading(true);
@@ -56,6 +52,10 @@ export default function ProductDetailPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [params.id]);
 
   const handleAddToCart = () => {
     if (!product) return;

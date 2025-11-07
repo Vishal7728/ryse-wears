@@ -13,6 +13,13 @@ interface AnalyticsData {
   total_orders: number;
 }
 
+interface ChartData {
+  name: string;
+  revenue?: number;
+  orders?: number;
+  value?: number;
+}
+
 export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,13 +58,6 @@ export default function AdminDashboard() {
   }, [router]);
 
   // Prepare data for charts
-  interface ChartData {
-    name: string;
-    revenue?: number;
-    orders?: number;
-    value?: number;
-  }
-
   const categoryData = analytics.reduce((acc: ChartData[], item) => {
     const existing = acc.find((cat) => cat.name === item.category_name);
     if (existing) {

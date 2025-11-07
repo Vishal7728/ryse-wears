@@ -12,6 +12,17 @@ interface AnalyticsData {
   total_orders: number;
 }
 
+interface CategoryData {
+  category: string;
+  revenue: number;
+  orders: number;
+}
+
+interface GenderData {
+  gender: string;
+  revenue: number;
+}
+
 export default function AdminAnalytics() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,12 +61,6 @@ export default function AdminAnalytics() {
   }, [router]);
 
   // Group data by category for chart
-  interface CategoryData {
-    category: string;
-    revenue: number;
-    orders: number;
-  }
-  
   const categoryData = analytics.reduce((acc: CategoryData[], item) => {
     const existing = acc.find((cat) => cat.category === item.category_name);
     if (existing) {
@@ -72,11 +77,6 @@ export default function AdminAnalytics() {
   }, [] as CategoryData[]);
 
   // Group data by gender
-  interface GenderData {
-    gender: string;
-    revenue: number;
-  }
-  
   const genderData = analytics.reduce((acc: GenderData[], item) => {
     const existing = acc.find((g) => g.gender === item.gender);
     if (existing) {

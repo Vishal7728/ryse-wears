@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lato, Montserrat } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import { DarkModeProvider } from "../context/DarkModeContext";
@@ -33,12 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-      </head>
       <body
         className={`${lato.variable} ${montserrat.variable} antialiased`}
       >
+        <Script
+          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+          strategy="lazyOnload"
+        />
         <DarkModeProvider>
           <CartProvider>
             <DarkModePattern />

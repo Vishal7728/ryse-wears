@@ -82,10 +82,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    fetchFeaturedProducts();
-  }, []);
-
   const fetchFeaturedProducts = async () => {
     try {
       setLoading(true);
@@ -153,6 +149,10 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, []);
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 transition-colors page-transition">

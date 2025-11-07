@@ -45,17 +45,6 @@ export default function AdminProducts() {
   
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
-    
-    fetchProducts();
-    fetchCategories();
-  }, [router]);
-
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -99,6 +88,17 @@ export default function AdminProducts() {
       console.error('Error fetching categories:', error);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+    
+    fetchProducts();
+    fetchCategories();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

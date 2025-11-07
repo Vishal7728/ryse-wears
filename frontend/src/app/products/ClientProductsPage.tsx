@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
 import ProductCard from '../../components/ProductCard';
@@ -21,6 +21,20 @@ interface Product {
   stock?: number;
 }
 
+interface MongoProduct {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+  subcategory?: string;
+  gender?: string;
+  sizes?: string[];
+  colors?: string[];
+  stock?: number;
+}
+
 export default function ClientProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +44,7 @@ export default function ClientProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const { addItem } = useCart();
 
-  useEffect(() => {
-    fetchProducts();
-  }, [selectedCategory, selectedGender, searchQuery]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -56,21 +66,6 @@ export default function ClientProductsPage() {
       }
       
       const data = await response.json();
-      
-      // Define MongoDB product type
-      interface MongoProduct {
-        _id: string;
-        name: string;
-        price: number;
-        description: string;
-        image: string;
-        category: string;
-        subcategory?: string;
-        gender?: string;
-        sizes?: string[];
-        colors?: string[];
-        stock?: number;
-      }
       
       // Map MongoDB products to frontend format
       const mappedProducts = data.map((product: MongoProduct) => ({
@@ -190,7 +185,11 @@ export default function ClientProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, selectedGender, searchQuery]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const categories = ['All', 'T-Shirts', 'Jeans', 'Shirts', 'Tops', 'Dresses', 'Hoodies', 'Belts', 'Caps'];
   const genders = ['All', 'Men', 'Women', 'Unisex'];
