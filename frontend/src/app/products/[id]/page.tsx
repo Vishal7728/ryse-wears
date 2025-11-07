@@ -94,64 +94,183 @@ export default function ProductDetailPage() {
   }
 
   if (!product) {
-    // Mock product data for testing
+    // Mock data for offline mode with Western products
     const mockProduct: Product = {
       _id: params.id as string,
-      name: 'Designer Silk Saree',
-      description: 'Elegant pure silk saree with intricate embroidery. Perfect for weddings and special occasions.',
-      price: 3499,
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
-      category: 'Sarees',
-      subcategory: 'Sarees',
-      gender: 'Women',
-      sizes: ['S', 'M', 'L', 'XL'],
-      colors: ['Red', 'Blue', 'Green'],
-      stock: 10
+      name: 'Classic White T-Shirt',
+      price: 799,
+      description: 'Premium cotton crew neck t-shirt, perfect for everyday wear. Soft fabric and comfortable fit.',
+      image: '/images/products/male/classic-white-tshirt.jpg',
+      category: 'Tops',
+      subcategory: 'T-Shirts',
+      gender: 'Men',
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: ['White', 'Black', 'Grey'],
+      stock: 50
     };
-    
-    // Check if ID matches one of our mock products
+
+    // In a real application, you would fetch the product data from an API
+    // For now, we'll use mock data
     const mockProducts: Product[] = [
       {
         _id: '1',
-        name: 'Designer Silk Saree',
-        description: 'Elegant pure silk saree with intricate embroidery. Perfect for weddings and special occasions.',
-        price: 3499,
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
-        category: 'Sarees',
-        subcategory: 'Sarees',
-        gender: 'Women',
-        sizes: ['S', 'M', 'L', 'XL'],
-        colors: ['Red', 'Blue', 'Green'],
-        stock: 10
+        name: 'Classic White T-Shirt',
+        price: 799,
+        description: 'Premium cotton crew neck t-shirt, perfect for everyday wear. Soft fabric and comfortable fit.',
+        image: '/images/products/male/classic-white-tshirt.jpg',
+        category: 'Tops',
+        subcategory: 'T-Shirts',
+        gender: 'Men',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        colors: ['White', 'Black', 'Grey'],
+        stock: 50
       },
       {
         _id: '2',
-        name: 'Banarasi Silk Saree',
-        description: 'Traditional Banarasi silk saree with zari work. Handwoven with gold and silver threads.',
-        price: 4999,
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=800&h=1000&fit=crop',
-        category: 'Sarees',
-        subcategory: 'Sarees',
-        gender: 'Women',
-        sizes: ['S', 'M', 'L', 'XL'],
-        colors: ['Gold', 'Silver', 'Bronze'],
-        stock: 5
+        name: 'Slim Fit Jeans',
+        price: 1899,
+        description: 'Modern slim fit jeans with stretch fabric for comfort. Classic blue denim with five-pocket styling.',
+        image: '/images/products/male/slim-fit-jeans.jpg',
+        category: 'Bottoms',
+        subcategory: 'Jeans',
+        gender: 'Men',
+        sizes: ['28', '30', '32', '34', '36'],
+        colors: ['Blue', 'Black', 'Grey'],
+        stock: 40
       },
       {
         _id: '3',
-        name: 'Anarkali Suit',
-        description: 'Beautiful Anarkali suit with heavy embroidery. Perfect for festive occasions.',
-        price: 2999,
-        image: 'https://images.unsplash.com/photo-1614095851165-d3e4b7e70b85?w=800&h=1000&fit=crop',
-        category: 'Suits',
-        subcategory: 'Suits',
-        gender: 'Women',
+        name: 'Black Leather Jacket',
+        price: 4999,
+        description: 'Genuine leather biker jacket with quilted lining. Classic moto style with zippered pockets.',
+        image: '/images/products/male/black-leather-jacket.jpg',
+        category: 'Outerwear',
+        subcategory: 'Jackets',
+        gender: 'Men',
         sizes: ['S', 'M', 'L', 'XL'],
-        colors: ['Pink', 'Blue', 'Green'],
-        stock: 8
+        colors: ['Black', 'Brown'],
+        stock: 20
+      },
+      {
+        _id: '4',
+        name: 'Casual Plaid Shirt',
+        price: 1299,
+        description: 'Soft cotton flannel shirt with classic plaid pattern. Button-down style with chest pocket.',
+        image: '/images/products/male/casual-plaid-shirt.jpg',
+        category: 'Tops',
+        subcategory: 'Shirts',
+        gender: 'Men',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        colors: ['Red', 'Blue', 'Green', 'Black'],
+        stock: 35
+      },
+      {
+        _id: '5',
+        name: 'Navy Blue Chinos',
+        price: 1599,
+        description: 'Slim fit chino pants in classic navy blue. Made from premium cotton twill with belt loops.',
+        image: '/images/products/male/navy-blue-chinos.jpg',
+        category: 'Bottoms',
+        subcategory: 'Chinos',
+        gender: 'Men',
+        sizes: ['28', '30', '32', '34', '36'],
+        colors: ['Navy', 'Khaki', 'Olive'],
+        stock: 30
+      },
+      {
+        _id: '6',
+        name: 'Hooded Sweatshirt',
+        price: 1399,
+        description: 'Comfortable hoodie with kangaroo pocket and adjustable drawstring hood. Perfect for casual wear.',
+        image: '/images/products/male/hooded-sweatshirt.jpg',
+        category: 'Outerwear',
+        subcategory: 'Hoodies',
+        gender: 'Men',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        colors: ['Grey', 'Black', 'Navy', 'Green'],
+        stock: 25
+      },
+      {
+        _id: '7',
+        name: 'Polo Shirt',
+        price: 999,
+        description: 'Classic polo shirt with ribbed collar and button placket. Made from breathable cotton pique.',
+        image: '/images/products/male/polo-shirt.jpg',
+        category: 'Tops',
+        subcategory: 'Polo',
+        gender: 'Men',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['White', 'Blue', 'Red', 'Black'],
+        stock: 40
+      },
+      {
+        _id: '8',
+        name: 'Cargo Pants',
+        price: 1799,
+        description: 'Tactical cargo pants with multiple utility pockets. Durable cotton blend with relaxed fit.',
+        image: '/images/products/male/cargo-pants.jpg',
+        category: 'Bottoms',
+        subcategory: 'Pants',
+        gender: 'Men',
+        sizes: ['28', '30', '32', '34', '36'],
+        colors: ['Khaki', 'Black', 'Olive'],
+        stock: 25
+      },
+      {
+        _id: '9',
+        name: 'Off-Shoulder Top',
+        price: 1199,
+        description: 'Trendy off-shoulder top with elastic neckline. Perfect for date nights and summer events.',
+        image: '/images/products/female/off-shoulder-top.jpg',
+        category: 'Tops',
+        subcategory: 'Blouses',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L'],
+        colors: ['Red', 'Black', 'White', 'Navy'],
+        stock: 25
+      },
+      {
+        _id: '10',
+        name: 'High-Waisted Jeans',
+        price: 1999,
+        description: 'Flattering high-waisted jeans with stretch fabric. Perfect fit with belt loops and classic styling.',
+        image: '/images/products/female/high-waisted-jeans.jpg',
+        category: 'Bottoms',
+        subcategory: 'Jeans',
+        gender: 'Women',
+        sizes: ['24', '26', '28', '30', '32'],
+        colors: ['Blue', 'Black', 'White'],
+        stock: 30
+      },
+      {
+        _id: '11',
+        name: 'Leather Moto Jacket',
+        price: 4999,
+        description: 'Edgy moto jacket with asymmetrical zip and stud detailing. Genuine leather for authentic look.',
+        image: '/images/products/female/leather-moto-jacket.jpg',
+        category: 'Outerwear',
+        subcategory: 'Jackets',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L'],
+        colors: ['Black', 'Brown'],
+        stock: 15
+      },
+      {
+        _id: '12',
+        name: 'Floral Dress',
+        price: 2299,
+        description: 'Beautiful floral print dress with flowing silhouette. Perfect for spring and summer occasions.',
+        image: '/images/products/female/floral-dress.jpg',
+        category: 'Dresses',
+        subcategory: 'Casual Dresses',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L'],
+        colors: ['Multicolor', 'Blue', 'Pink'],
+        stock: 20
       }
     ];
-    
+
+    // Check if ID matches one of our mock products
     const foundProduct = mockProducts.find(p => p._id === params.id);
     if (foundProduct) {
       setProduct(foundProduct);

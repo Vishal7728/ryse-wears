@@ -1,31 +1,27 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const testConnection = async () => {
   try {
-    console.log('Attempting to connect to MongoDB...');
-    console.log('MONGODB_URL:', process.env.MONGODB_URL ? 'Loaded' : 'Not found');
+    console.log('Testing MongoDB connection...');
+    console.log('MONGODB_URL:', process.env.MONGODB_URL);
     
-    // Try to connect
-    await mongoose.connect(process.env.MONGODB_URL);
-    console.log('✓ MongoDB Connected Successfully');
+    // Connect to MongoDB
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     
-    // Try to fetch products
-    const Product = require('./models/Product');
-    const products = await Product.find({}).limit(5);
-    console.log(`✓ Found ${products.length} products in database`);
+    console.log('✅ MongoDB Connected successfully!');
     
-    if (products.length > 0) {
-      console.log('Sample product images:');
-      products.forEach((product, index) => {
-        console.log(`${index + 1}. ${product.name}: ${product.image}`);
-      });
-    }
-    
+    // Close connection
     await mongoose.connection.close();
-    console.log('✓ Database connection closed');
+    console.log('Disconnected from MongoDB');
+    process.exit(0);
   } catch (error) {
-    console.error('✗ Error:', error.message);
+    console.error('❌ MongoDB Connection Error:', error.message);
     process.exit(1);
   }
 };

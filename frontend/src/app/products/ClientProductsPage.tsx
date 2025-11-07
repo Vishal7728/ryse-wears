@@ -96,85 +96,210 @@ export default function ClientProductsPage() {
       console.error('Error fetching products:', err);
       // Use fallback mock data when API fails
       const mockProducts: Product[] = [
+        // Male Products (25 items)
         {
           id: '1',
-          name: 'Designer Silk Saree',
-          price: 3499,
-          description: 'Elegant pure silk saree with intricate embroidery',
-          image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
-          category: 'Sarees',
-          subcategory: 'Sarees',
-          gender: 'Women'
+          name: 'Classic White T-Shirt',
+          price: 799,
+          description: 'Premium cotton crew neck t-shirt, perfect for everyday wear. Soft fabric and comfortable fit.',
+          image: '/images/products/male/classic-white-tshirt.jpg',
+          category: 'Tops',
+          subcategory: 'T-Shirts',
+          gender: 'Men'
         },
         {
           id: '2',
-          name: 'Banarasi Silk Saree',
-          price: 4999,
-          description: 'Traditional Banarasi silk saree with zari work',
-          image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=800&h=1000&fit=crop',
-          category: 'Sarees',
-          subcategory: 'Sarees',
-          gender: 'Women'
+          name: 'Slim Fit Jeans',
+          price: 1899,
+          description: 'Modern slim fit jeans with stretch fabric for comfort. Classic blue denim with five-pocket styling.',
+          image: '/images/products/male/slim-fit-jeans.jpg',
+          category: 'Bottoms',
+          subcategory: 'Jeans',
+          gender: 'Men'
         },
         {
           id: '3',
-          name: 'Anarkali Suit',
-          price: 2999,
-          description: 'Beautiful Anarkali suit with heavy embroidery',
-          image: 'https://images.unsplash.com/photo-1614095851165-d3e4b7e70b85?w=800&h=1000&fit=crop',
-          category: 'Suits',
-          subcategory: 'Suits',
-          gender: 'Women'
+          name: 'Black Leather Jacket',
+          price: 4999,
+          description: 'Genuine leather biker jacket with quilted lining. Classic moto style with zippered pockets.',
+          image: '/images/products/male/black-leather-jacket.jpg',
+          category: 'Outerwear',
+          subcategory: 'Jackets',
+          gender: 'Men'
         },
         {
           id: '4',
-          name: 'Punjabi Suit',
-          price: 1899,
-          description: 'Vibrant Punjabi suit with phulkari embroidery',
-          image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&h=1000&fit=crop',
-          category: 'Suits',
-          subcategory: 'Suits',
-          gender: 'Women'
+          name: 'Casual Plaid Shirt',
+          price: 1299,
+          description: 'Soft cotton flannel shirt with classic plaid pattern. Button-down style with chest pocket.',
+          image: '/images/products/male/casual-plaid-shirt.jpg',
+          category: 'Tops',
+          subcategory: 'Shirts',
+          gender: 'Men'
         },
         {
           id: '5',
-          name: 'Lehenga Choli',
-          price: 8999,
-          description: 'Stunning bridal lehenga choli with mirror work',
-          image: 'https://images.unsplash.com/photo-1595341595155-9f8cd95d3e5f?w=800&h=1000&fit=crop',
-          category: 'Lehenga',
-          subcategory: 'Lehenga',
-          gender: 'Women'
+          name: 'Navy Blue Chinos',
+          price: 1599,
+          description: 'Slim fit chino pants in classic navy blue. Made from premium cotton twill with belt loops.',
+          image: '/images/products/male/navy-blue-chinos.jpg',
+          category: 'Bottoms',
+          subcategory: 'Chinos',
+          gender: 'Men'
         },
         {
           id: '6',
-          name: 'Kurta Pajama Set',
-          price: 1499,
-          description: 'Classic mens kurta pajama in premium cotton',
-          image: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=800&h=1000&fit=crop',
-          category: 'Kurta',
-          subcategory: 'Kurta',
+          name: 'Hooded Sweatshirt',
+          price: 1399,
+          description: 'Comfortable hoodie with kangaroo pocket and adjustable drawstring hood. Perfect for casual wear.',
+          image: '/images/products/male/hooded-sweatshirt.jpg',
+          category: 'Outerwear',
+          subcategory: 'Hoodies',
           gender: 'Men'
         },
         {
           id: '7',
-          name: 'Sherwani',
-          price: 6499,
-          description: 'Royal sherwani with intricate embroidery',
-          image: 'https://images.unsplash.com/photo-1606219592522-af678b8e0c8e?w=800&h=1000&fit=crop',
-          category: 'Sherwani',
-          subcategory: 'Sherwani',
+          name: 'Polo Shirt',
+          price: 999,
+          description: 'Classic polo shirt with ribbed collar and button placket. Made from breathable cotton pique.',
+          image: '/images/products/male/polo-shirt.jpg',
+          category: 'Tops',
+          subcategory: 'Polo',
           gender: 'Men'
         },
         {
           id: '8',
-          name: 'Nehru Jacket',
-          price: 2299,
-          description: 'Contemporary Nehru jacket with modern cuts',
-          image: 'https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=800&h=1000&fit=crop',
-          category: 'Jackets',
-          subcategory: 'Jackets',
+          name: 'Cargo Pants',
+          price: 1799,
+          description: 'Tactical cargo pants with multiple utility pockets. Durable cotton blend with relaxed fit.',
+          image: '/images/products/male/cargo-pants.jpg',
+          category: 'Bottoms',
+          subcategory: 'Pants',
           gender: 'Men'
+        },
+        
+        // Female Products (sample 8 for mock data)
+        {
+          id: '9',
+          name: 'Off-Shoulder Top',
+          price: 1199,
+          description: 'Trendy off-shoulder top with elastic neckline. Perfect for date nights and summer events.',
+          image: '/images/products/female/off-shoulder-top.jpg',
+          category: 'Tops',
+          subcategory: 'Blouses',
+          gender: 'Women'
+        },
+        {
+          id: '10',
+          name: 'High-Waisted Jeans',
+          price: 1999,
+          description: 'Flattering high-waisted jeans with stretch fabric. Perfect fit with belt loops and classic styling.',
+          image: '/images/products/female/high-waisted-jeans.jpg',
+          category: 'Bottoms',
+          subcategory: 'Jeans',
+          gender: 'Women'
+        },
+        {
+          id: '11',
+          name: 'Leather Moto Jacket',
+          price: 4999,
+          description: 'Edgy moto jacket with asymmetrical zip and stud detailing. Genuine leather for authentic look.',
+          image: '/images/products/female/leather-moto-jacket.jpg',
+          category: 'Outerwear',
+          subcategory: 'Jackets',
+          gender: 'Women'
+        },
+        {
+          id: '12',
+          name: 'Floral Dress',
+          price: 2299,
+          description: 'Beautiful floral print dress with flowing silhouette. Perfect for spring and summer occasions.',
+          image: '/images/products/female/floral-dress.jpg',
+          category: 'Dresses',
+          subcategory: 'Casual Dresses',
+          gender: 'Women'
+        },
+        {
+          id: '13',
+          name: 'Mom Jeans',
+          price: 1799,
+          description: 'Retro style mom jeans with high waist and relaxed fit. Classic denim with modern comfort.',
+          image: '/images/products/female/mom-jeans.jpg',
+          category: 'Bottoms',
+          subcategory: 'Jeans',
+          gender: 'Women'
+        },
+        {
+          id: '14',
+          name: 'Crop Hoodie',
+          price: 1399,
+          description: 'Stylish crop hoodie with drawstring hood and kangaroo pocket. Perfect for casual streetwear looks.',
+          image: '/images/products/female/crop-hoodie.jpg',
+          category: 'Outerwear',
+          subcategory: 'Hoodies',
+          gender: 'Women'
+        },
+        {
+          id: '15',
+          name: 'Wrap Top',
+          price: 1299,
+          description: 'Elegant wrap top with adjustable tie closure. Flattering fit with three-quarter sleeves.',
+          image: '/images/products/female/wrap-top.jpg',
+          category: 'Tops',
+          subcategory: 'Blouses',
+          gender: 'Women'
+        },
+        {
+          id: '16',
+          name: 'Mini Skirt',
+          price: 899,
+          description: 'Cute mini skirt with elastic waistband. Perfect for casual outings and party wear.',
+          image: '/images/products/female/mini-skirt.jpg',
+          category: 'Bottoms',
+          subcategory: 'Skirts',
+          gender: 'Women'
+        },
+        
+        // Accessories (sample 4 for mock data)
+        {
+          id: '17',
+          name: 'Leather Crossbody Bag',
+          price: 2499,
+          description: 'Genuine leather crossbody bag with adjustable strap. Perfect for hands-free convenience.',
+          image: '/images/products/accessories/leather-crossbody-bag.jpg',
+          category: 'Bags',
+          subcategory: 'Crossbody Bags',
+          gender: 'Unisex'
+        },
+        {
+          id: '18',
+          name: 'Baseball Cap',
+          price: 599,
+          description: 'Classic baseball cap with adjustable strap. Perfect for casual and sporty looks.',
+          image: '/images/products/accessories/baseball-cap.jpg',
+          category: 'Hats',
+          subcategory: 'Caps',
+          gender: 'Unisex'
+        },
+        {
+          id: '19',
+          name: 'Sneakers',
+          price: 2999,
+          description: 'Comfortable sneakers with cushioned sole. Perfect for daily wear and casual outings.',
+          image: '/images/products/accessories/sneakers.jpg',
+          category: 'Shoes',
+          subcategory: 'Casual Shoes',
+          gender: 'Unisex'
+        },
+        {
+          id: '20',
+          name: 'Tote Bag',
+          price: 1299,
+          description: 'Spacious tote bag with sturdy handles. Perfect for work or shopping trips.',
+          image: '/images/products/accessories/tote-bag.jpg',
+          category: 'Bags',
+          subcategory: 'Tote Bags',
+          gender: 'Unisex'
         }
       ];
       setProducts(mockProducts);
@@ -188,7 +313,7 @@ export default function ClientProductsPage() {
     fetchProducts();
   }, [fetchProducts]);
 
-  const categories = ['All', 'T-Shirts', 'Jeans', 'Shirts', 'Tops', 'Dresses', 'Hoodies', 'Belts', 'Caps'];
+  const categories = ['All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear', 'Bags', 'Hats', 'Shoes'];
   const genders = ['All', 'Men', 'Women', 'Unisex'];
 
   if (loading) {
