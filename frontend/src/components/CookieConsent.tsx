@@ -40,21 +40,28 @@ export default function CookieConsent() {
   };
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
-    if (!consent) {
-      setShowBanner(true);
-    } else {
-      const savedPreferences = JSON.parse(consent);
-      setPreferences(savedPreferences);
-      
-      // Initialize tracking if user has consented
-      if (savedPreferences.personalization) {
-        initializePersonalization();
+    const checkConsent = () => {
+      const consent = localStorage.getItem('cookieConsent');
+      if (!consent) {
+        // Use a timeout to avoid calling setState directly in the effect
+        setTimeout(() => {
+          setShowBanner(true);
+        }, 0);
+      } else {
+        const savedPreferences = JSON.parse(consent);
+        setPreferences(savedPreferences);
+        
+        // Initialize tracking if user has consented
+        if (savedPreferences.personalization) {
+          initializePersonalization();
+        }
+        if (savedPreferences.analytics) {
+          initializeAnalytics();
+        }
       }
-      if (savedPreferences.analytics) {
-        initializeAnalytics();
-      }
-    }
+    };
+    
+    checkConsent();
   }, []);
 
   const handleAcceptAll = () => {

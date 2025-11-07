@@ -11,13 +11,14 @@ export default function Header() {
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
-    const onOrder = (e: any) => {
+    const onOrder = (e: CustomEvent<{ status: string; id: string }>) => {
       if (e?.detail?.status === 'paid') setOrderToast({ id: e.detail.id });
       setTimeout(() => setOrderToast(null), 5000);
     };
     if (typeof window !== 'undefined') {
-      window.addEventListener('order:status', onOrder as any);
-      return () => window.removeEventListener('order:status', onOrder as any);
+      const handler = (e: Event) => onOrder(e as CustomEvent<{ status: string; id: string }>);
+      window.addEventListener('order:status', handler);
+      return () => window.removeEventListener('order:status', handler);
     }
   }, []);
 

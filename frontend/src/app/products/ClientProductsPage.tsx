@@ -1,11 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { useCart } from '../../context/CartContext';
 import ProductCard from '../../components/ProductCard';
 import { API_URL } from '../../config/api';
-import { recordEvent, buildPreferences } from '../../utils/analytics';
+import { buildPreferences } from '../../utils/analytics';
 
 interface Product {
   id: string;
@@ -42,7 +40,6 @@ export default function ClientProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedGender, setSelectedGender] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const { addItem } = useCart();
 
   const fetchProducts = useCallback(async () => {
     try {

@@ -9,8 +9,46 @@ import { API_URL } from '../../config/api';
 
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay: new (options: RazorpayOptions) => {
+      open: () => void;
+    };
   }
+}
+
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  image?: string;
+  order_id: string;
+  callback_url: string;
+  redirect: boolean;
+  prefill: {
+    name: string;
+    email: string;
+    contact: string;
+  };
+  notes: {
+    address: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
+  theme: {
+    color: string;
+  };
+  modal: {
+    ondismiss: () => void;
+  };
+  handler: (response: RazorpayResponse) => void;
+}
+
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
 }
 
 export default function CheckoutPage() {
@@ -114,7 +152,7 @@ export default function CheckoutPage() {
             setLoading(false);
           },
         },
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           // Verify payment
           const verifyResponse = await fetch(`${API_URL}/api/payment/verify`, {
             method: 'POST',

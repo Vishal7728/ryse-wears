@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCart } from '../../../context/CartContext';
@@ -32,7 +32,7 @@ export default function ProductDetailPage() {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_URL}/api/products/${params.id}`);
@@ -51,13 +51,13 @@ export default function ProductDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id]);
 
   useEffect(() => {
     if (params.id) {
       fetchProduct();
     }
-  }, [params.id]);
+  }, [params.id, fetchProduct]);
 
   const handleAddToCart = () => {
     if (!product) return;
