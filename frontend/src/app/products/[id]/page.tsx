@@ -54,7 +54,9 @@ export default function ProductDetailPage() {
   };
 
   useEffect(() => {
-    fetchProduct();
+    if (params.id) {
+      fetchProduct();
+    }
   }, [params.id]);
 
   const handleAddToCart = () => {
@@ -134,6 +136,7 @@ export default function ProductDetailPage() {
                 fill
                 className="object-cover"
                 priority
+                unoptimized
               />
             </div>
           </div>
