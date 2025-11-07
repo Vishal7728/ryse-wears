@@ -5,6 +5,8 @@ import { Product } from '../services/api';
 
 interface CartItem extends Product {
   quantity: number;
+  // Allow both id and _id for different product formats
+  _id?: string;
 }
 
 interface CartState {
@@ -30,7 +32,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+      const existingItem = state.items.find(item => item.id === action.payload.id || item._id === action.payload.id);
       if (existingItem) {
         return {
           ...state,
@@ -50,7 +52,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       }
     }
     case 'REMOVE_ITEM': {
-      const itemToRemove = state.items.find(item => item.id === action.payload);
+      const itemToRemove = state.items.find(item => item.id === action.payload || item._id === action.payload);
       if (!itemToRemove) return state;
       
       return {
@@ -60,7 +62,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       };
     }
     case 'UPDATE_QUANTITY': {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const item = state.items.find(item => item.id === action.payload.id || item._id === action.payload.id);
       if (!item) return state;
       
       const quantityDiff = action.payload.quantity - item.quantity;

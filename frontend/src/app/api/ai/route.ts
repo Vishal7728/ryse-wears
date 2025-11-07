@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 
-export const runtime = 'edge';
+// Remove edge runtime to prevent build issues
+// export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     const data = await completion.json();
     const reply = data?.choices?.[0]?.message?.content || 'How can I assist you?';
     return new Response(JSON.stringify({ reply }), { status: 200, headers: { 'Content-Type': 'application/json' } });
-  } catch (e: any) {
+  } catch (e: unknown) {
     return new Response(JSON.stringify({ reply: 'Sorry, something went wrong.' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   }
 }

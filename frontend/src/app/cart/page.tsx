@@ -75,7 +75,7 @@ export default function CartPage() {
                         <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
                             <button 
-                              onClick={() => handleQuantityChange(item.id as number | string, item.quantity - 1)}
+                              onClick={() => handleQuantityChange(item.id || item._id || '', item.quantity - 1)}
                               className="px-3 py-1 bg-white hover:bg-gray-100 text-gray-600 transition-colors duration-200"
                               disabled={item.quantity <= 1}
                             >
@@ -83,7 +83,7 @@ export default function CartPage() {
                             </button>
                             <span className="px-4 py-1 bg-white text-gray-900 font-medium">{item.quantity}</span>
                             <button 
-                              onClick={() => handleQuantityChange(item.id as number | string, item.quantity + 1)}
+                              onClick={() => handleQuantityChange(item.id || item._id || '', item.quantity + 1)}
                               className="px-3 py-1 bg-white hover:bg-gray-100 text-gray-600 transition-colors duration-200"
                             >
                               +
@@ -91,7 +91,7 @@ export default function CartPage() {
                           </div>
                           
                           <button
-                            onClick={() => removeItem(item.id as number | string)}
+                            onClick={() => removeItem(item.id || item._id || '')}
                             className="flex items-center text-red-600 hover:text-red-800 transition-colors duration-200 group"
                           >
                             <svg className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

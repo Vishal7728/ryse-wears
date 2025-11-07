@@ -62,6 +62,7 @@ export default function ProductDetailPage() {
 
     const cartItem = {
       id: product._id,
+      _id: product._id,
       name: product.name,
       price: product.price,
       description: product.description,
