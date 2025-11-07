@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema({
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
-// Hash password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
     return next();
@@ -37,12 +36,10 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// Compare password method
 userSchema.methods.comparePassword = async function(password) {
   return bcrypt.compare(password, this.password);
 };
 
-// Remove password from toJSON output
 userSchema.methods.toJSON = function() {
   const userObject = this.toObject();
   delete userObject.password;

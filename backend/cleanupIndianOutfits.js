@@ -4,7 +4,6 @@ const Product = require('./models/Product');
 
 dotenv.config();
 
-// Remove all remaining Indian traditional outfits
 const indianOutfitsToRemove = [
   'Punjabi Suit',
   'Kurta Pajama Set',

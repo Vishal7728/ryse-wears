@@ -3,9 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Western products data
 const westernProducts = [
-  // Male Products (25 items)
   {
     name: 'Classic White T-Shirt',
     description: 'Premium cotton crew neck t-shirt, perfect for everyday wear. Soft fabric and comfortable fit.',
@@ -307,7 +305,6 @@ const westernProducts = [
     stock: 35
   },
 
-  // Female Products (25 items)
   {
     name: 'Off-Shoulder Top',
     description: 'Trendy off-shoulder top with elastic neckline. Perfect for date nights and summer events.',
@@ -609,7 +606,6 @@ const westernProducts = [
     stock: 25
   },
 
-  // Accessories (Unisex)
   {
     name: 'Leather Crossbody Bag',
     description: 'Genuine leather crossbody bag with adjustable strap. Perfect for hands-free convenience.',
@@ -761,12 +757,10 @@ const createWesternProducts = async () => {
   console.log('===================================\n');
   
   try {
-    // Try to connect to MongoDB
     console.log('Attempting to connect to MongoDB...');
     await mongoose.connect(process.env.MONGODB_URL);
     console.log('✅ MongoDB Connected successfully!\n');
     
-    // Try to load Product model
     let Product;
     try {
       Product = require('./models/Product');
@@ -776,17 +770,14 @@ const createWesternProducts = async () => {
       throw new Error('Model loading failed');
     }
     
-    // Clear existing products
     console.log('Clearing existing products...');
     await Product.deleteMany({});
     console.log('✅ Existing products cleared.\n');
     
-    // Insert new products
     console.log('Inserting new Western products...');
     const insertedProducts = await Product.insertMany(westernProducts);
     console.log(`✅ Successfully inserted ${insertedProducts.length} Western products!\n`);
     
-    // Display summary
     console.log('Product Summary:');
     console.log('================');
     console.log(`Male Products: 25`);

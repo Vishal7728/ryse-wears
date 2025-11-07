@@ -4,7 +4,6 @@ const Product = require('./models/Product');
 
 dotenv.config();
 
-// Products to remove
 const productsToRemove = [
   'Sherwani',
   'Cotton Kurti',
@@ -16,7 +15,6 @@ const productsToRemove = [
   'Chanderi Saree'
 ];
 
-// New Western fashion products
 const westernProducts = [
   {
     name: 'Denim Jacket',
@@ -121,12 +119,10 @@ const replaceProducts = async () => {
     await mongoose.connect(process.env.DATABASE_URL);
     console.log('MongoDB Connected...\n');
 
-    // Remove old products
     console.log('Removing traditional wear products...');
     const deleteResult = await Product.deleteMany({ name: { $in: productsToRemove } });
     console.log(`✓ Removed ${deleteResult.deletedCount} products\n`);
 
-    // Add new Western products
     console.log('Adding Western fashion products...');
     const insertResult = await Product.insertMany(westernProducts);
     console.log(`✓ Added ${insertResult.length} new Western fashion products\n`);

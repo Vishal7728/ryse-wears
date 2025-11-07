@@ -21,7 +21,6 @@ const imageUpdates = {
 
 const updateProductImages = async () => {
   try {
-    // Connect to MongoDB
     const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
     if (!mongoUrl) {
       console.error('No MongoDB URL found in environment variables');
@@ -34,7 +33,6 @@ const updateProductImages = async () => {
 
     let updateCount = 0;
 
-    // Update each product
     for (const [productName, imageUrl] of Object.entries(imageUpdates)) {
       const result = await Product.updateOne(
         { name: productName },
@@ -51,7 +49,6 @@ const updateProductImages = async () => {
 
     console.log(`\n${updateCount} product images updated successfully!`);
 
-    // Close connection
     await mongoose.connection.close();
     console.log('Database connection closed');
     process.exit(0);

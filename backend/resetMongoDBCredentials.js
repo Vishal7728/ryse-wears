@@ -4,16 +4,13 @@ const path = require('path');
 console.log('RYSE Wears - MongoDB Credentials Reset');
 console.log('====================================\n');
 
-// Path to .env file
 const envPath = path.join(__dirname, '.env');
 
-// Read current .env file
 let envContent = fs.readFileSync(envPath, 'utf8');
 
 console.log('Current MongoDB Configuration:');
 console.log('=============================');
 
-// Extract MongoDB URL
 const mongoMatch = envContent.match(/MONGODB_URL=(.*)/);
 if (mongoMatch) {
   const mongoUrl = mongoMatch[1];
@@ -25,7 +22,7 @@ if (mongoMatch) {
     console.log('- Host:', url.hostname);
     console.log('- Database:', url.pathname.substring(1));
     console.log('- Username:', url.username);
-    console.log('- Password: ********'); // Don't show password
+    console.log('- Password: ********');
     
     console.log('\n🔧 How to Fix Authentication Issues:');
     console.log('====================================');

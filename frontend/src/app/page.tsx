@@ -77,7 +77,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBanner((prev) => (prev + 1) % banners.length);
-    }, 5000); // Change every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -88,10 +88,8 @@ export default function Home() {
       const response = await fetch(`${API_URL}/api/products?limit=8`);
       const data = await response.json();
       
-      // Handle both old and new API response formats
       const productsData = data.products || data;
       
-      // Limit to 8 products for better performance
       const products = productsData.slice(0, 8).map((product: MongoProduct) => ({
         id: product._id,
         name: product.name,
@@ -104,7 +102,6 @@ export default function Home() {
       setFeaturedProducts(products);
     } catch (error) {
       console.error('Error fetching products:', error);
-      // Fallback to mock data if API fails
       setFeaturedProducts([
         {
           id: 1,
@@ -152,7 +149,6 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 transition-colors page-transition">
       <Header />
 
-      {/* Flash Deal Marquee Bar */}
       <div className="bg-gradient-to-r from-red-600 via-orange-500 to-red-600 text-white py-3 overflow-hidden relative">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-shimmer"></div>
         <div className="relative flex items-center">
@@ -166,7 +162,6 @@ export default function Home() {
             <span className="mx-8 text-lg font-bold">Buy 2 Get 1 FREE on All Shirts</span>
             <span className="mx-8 text-lg font-bold">Flash Sale Ends in 6 Hours!</span>
             <span className="mx-8 text-lg font-bold">Free Shipping on Orders Above ₹1,500</span>
-            {/* Duplicate for seamless loop */}
             <span className="mx-8 text-lg font-bold">UP TO 70% OFF on Western Wear!</span>
             <span className="mx-8 text-lg font-bold">Limited Time: Premium Blazers ₹1,999 (Save ₹3,000)</span>
             <span className="mx-8 text-lg font-bold">Denim Jackets ₹999 Only - Hurry!</span>
@@ -177,23 +172,18 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Hero Section - Full Viewport Banner with Auto-Change */}
       <div className="relative h-screen overflow-hidden">
-        {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
           style={{
             backgroundImage: `url(${banners[currentBanner].image})`,
           }}
         >
-          {/* Dark Overlay for text contrast */}
           <div className="absolute inset-0 bg-black/40"></div>
           
-          {/* Animated Pattern Overlay */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6TTEyIDM0YzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6bTAtMTBjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00ek0yNCAzNGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6bTAtMTBjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
         </div>
         
-        {/* Hero Content */}
         <div className="relative h-full flex items-center justify-center text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 key={`title-${currentBanner}`} className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-extrabold tracking-tight mb-6 animate-fade-in ${banners[currentBanner].textColor} drop-shadow-2xl`}>
@@ -217,7 +207,6 @@ export default function Home() {
               </Link>
             </div>
             
-            {/* Banner Indicators */}
             <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-3">
               {banners.map((_, index) => (
                 <button
@@ -233,7 +222,6 @@ export default function Home() {
               ))}
             </div>
             
-            {/* Scroll Down Indicator */}
             <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
               <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -243,7 +231,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Featured Products */}
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -281,7 +268,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* Features Section */}
       <div className="bg-white dark:bg-slate-800 py-16 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -322,7 +308,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Banner Section */}
       <div className="bg-gray-50 dark:bg-slate-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -331,7 +316,6 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Video 1 - Fashion Showcase */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
               <video 
                 className="w-full h-full object-cover" 
@@ -355,7 +339,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Video 2 - Brand Story */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
               <video 
                 className="w-full h-full object-cover" 
@@ -382,7 +365,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3D Fashion Models Showcase */}
       <div className="bg-gradient-to-b from-gray-50 to-white dark:from-slate-900 dark:to-slate-800 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -391,7 +373,6 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Male Model */}
             <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
               <div className="p-6 bg-gradient-to-r from-blue-500 to-indigo-600">
                 <h3 className="text-2xl font-bold text-white mb-2">Men&apos;s Collection</h3>
@@ -431,7 +412,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Female Model */}
             <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
               <div className="p-6 bg-gradient-to-r from-pink-500 to-purple-600">
                 <h3 className="text-2xl font-bold text-white mb-2">Women&apos;s Collection</h3>
@@ -472,7 +452,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Features Below Models */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
               <div className="w-12 h-12 mx-auto mb-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">

@@ -153,19 +153,12 @@ const indianTraditionalWear = [
 
 const seedProducts = async () => {
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.DATABASE_URL);
     console.log('MongoDB Connected for seeding...');
 
-    // Clear existing products (optional - comment out if you want to keep existing)
-    // await Product.deleteMany({});
-    // console.log('Existing products cleared');
-
-    // Insert Indian traditional wear products
     const products = await Product.insertMany(indianTraditionalWear);
     console.log(`${products.length} Indian traditional wear products added successfully!`);
 
-    // Close connection
     await mongoose.connection.close();
     console.log('Database connection closed');
     process.exit(0);

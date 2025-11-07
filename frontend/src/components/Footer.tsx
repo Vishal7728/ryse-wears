@@ -1,5 +1,4 @@
 'use client';
-'use client';
 
 import Link from 'next/link';
 
@@ -8,7 +7,6 @@ export default function Footer() {
     <footer className="bg-gray-900 dark:bg-black text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-display font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               RYSE Wears
@@ -53,7 +51,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="text-lg font-display font-semibold mb-4 text-white">Quick Links</h4>
             <ul className="space-y-2">
@@ -85,7 +82,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Customer Service */}
           <div>
             <h4 className="text-lg font-display font-semibold mb-4 text-white">Customer Service</h4>
             <ul className="space-y-2">
@@ -112,7 +108,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h4 className="text-lg font-display font-semibold mb-4 text-white">Newsletter</h4>
             <p className="text-gray-400 text-sm mb-4 font-sans">
@@ -134,7 +129,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm text-center md:text-left">

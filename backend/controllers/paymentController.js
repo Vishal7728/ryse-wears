@@ -1,19 +1,17 @@
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
-// Initialize Razorpay instance
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID || 'your_key_id',
   key_secret: process.env.RAZORPAY_KEY_SECRET || 'your_key_secret',
 });
 
-// Create order
 const createOrder = async (req, res) => {
   try {
     const { amount, currency = 'INR' } = req.body;
 
     const options = {
-      amount: amount * 100, // Amount in paise (multiply by 100)
+      amount: amount * 100,
       currency,
       receipt: `receipt_${Date.now()}`,
       payment_capture: 1,
@@ -41,7 +39,6 @@ const createOrder = async (req, res) => {
   }
 };
 
-// Verify payment
 const verifyPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -53,7 +50,6 @@ const verifyPayment = async (req, res) => {
       .digest('hex');
 
     if (razorpay_signature === expectedSign) {
-      // Fetch payment details for verification
       const payment = await razorpay.payments.fetch(razorpay_payment_id);
       
       res.json({
@@ -63,7 +59,7 @@ const verifyPayment = async (req, res) => {
           payment_id: razorpay_payment_id,
           order_id: razorpay_order_id,
           status: payment.status,
-          amount: payment.amount / 100, // Convert paise to rupees
+          amount: payment.amount / 100,
           method: payment.method,
         },
       });
@@ -83,7 +79,6 @@ const verifyPayment = async (req, res) => {
   }
 };
 
-// Get payment details
 const getPaymentDetails = async (req, res) => {
   try {
     const { paymentId } = req.params;

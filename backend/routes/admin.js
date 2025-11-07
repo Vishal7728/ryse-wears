@@ -5,7 +5,6 @@ const Category = require('../models/Category');
 const Order = require('../models/Order');
 const authenticateToken = require('../middleware/auth');
 
-// Middleware to check if user is admin
 const isAdmin = (req, res, next) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Access denied. Admins only.' });
@@ -13,10 +12,8 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-// Get dashboard analytics
 router.get('/dashboard/analytics', authenticateToken, isAdmin, async (req, res) => {
   try {
-    // Aggregate sales data by category, gender, and subcategory
     const analytics = await Order.aggregate([
       { $match: { status: 'delivered' } },
       { $unwind: '$items' },
@@ -70,7 +67,6 @@ router.get('/dashboard/analytics', authenticateToken, isAdmin, async (req, res) 
   }
 });
 
-// Get all products
 router.get('/products', authenticateToken, isAdmin, async (req, res) => {
   try {
     const products = await Product.find().populate('category_id');
@@ -80,7 +76,6 @@ router.get('/products', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Get product by ID
 router.get('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate('category_id');
@@ -93,12 +88,10 @@ router.get('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Create new product
 router.post('/products', authenticateToken, isAdmin, async (req, res) => {
   try {
     const { name, description, price, image_url, category_id, subcategory, gender, size, color, stock_quantity } = req.body;
     
-    // Validate required fields
     if (!name || !price || !category_id) {
       return res.status(400).json({ message: 'Name, price, and category are required' });
     }
@@ -118,7 +111,6 @@ router.post('/products', authenticateToken, isAdmin, async (req, res) => {
     
     await product.save();
     
-    // Populate category before sending response
     await product.populate('category_id');
     
     res.status(201).json(product);
@@ -127,7 +119,6 @@ router.post('/products', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Update product
 router.put('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('category_id');
@@ -140,7 +131,6 @@ router.put('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Delete product
 router.delete('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -153,7 +143,6 @@ router.delete('/products/:id', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Get all categories
 router.get('/categories', authenticateToken, isAdmin, async (req, res) => {
   try {
     const categories = await Category.find({});
@@ -163,12 +152,10 @@ router.get('/categories', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Create new category
 router.post('/categories', authenticateToken, isAdmin, async (req, res) => {
   try {
     const { name, description } = req.body;
     
-    // Validate required fields
     if (!name) {
       return res.status(400).json({ message: 'Category name is required' });
     }
@@ -181,7 +168,6 @@ router.post('/categories', authenticateToken, isAdmin, async (req, res) => {
   }
 });
 
-// Get all orders
 router.get('/orders', authenticateToken, isAdmin, async (req, res) => {
   try {
     const orders = await Order.find({}).populate('user_id').populate('items.product_id');

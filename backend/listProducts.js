@@ -6,7 +6,6 @@ dotenv.config();
 
 const listProducts = async () => {
   try {
-    // Connect to MongoDB
     const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
     if (!mongoUrl) {
       console.error('No MongoDB URL found in environment variables');
@@ -17,7 +16,6 @@ const listProducts = async () => {
     await mongoose.connect(mongoUrl);
     console.log('MongoDB Connected successfully!\n');
 
-    // Fetch all products
     const products = await Product.find({}).sort({ created_at: -1 });
     
     console.log(`Found ${products.length} products in the database:\n`);
@@ -37,7 +35,6 @@ const listProducts = async () => {
     } else {
       console.log('No products found in the database.');
       
-      // Show mock data structure
       console.log('\nMock data structure used in frontend:');
       const mockProducts = [
         {

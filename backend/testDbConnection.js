@@ -8,19 +8,16 @@ const testConnection = async () => {
     console.log('Testing MongoDB connection...');
     console.log('MONGODB_URL:', process.env.MONGODB_URL ? 'SET' : 'NOT SET');
     
-    // Simple connection without deprecated options
     await mongoose.connect(process.env.MONGODB_URL, {
-      serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+      serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
     });
     
     console.log('✅ MongoDB Connected successfully!');
     
-    // Test if we can access collections
     const collections = await mongoose.connection.db.listCollections().toArray();
     console.log('Available collections:', collections.map(c => c.name));
     
-    // Close connection
     await mongoose.connection.close();
     console.log('Disconnected from MongoDB');
     process.exit(0);
@@ -29,7 +26,6 @@ const testConnection = async () => {
     console.error('Error code:', error.code);
     console.error('Error name:', error.name);
     
-    // Provide specific troubleshooting steps
     console.log('\n🔧 Troubleshooting Steps:');
     console.log('1. Check if your IP (157.48.92.47) is whitelisted in MongoDB Atlas');
     console.log('2. Verify username: kumaradik37_db_user');

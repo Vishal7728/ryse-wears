@@ -6,19 +6,17 @@ dotenv.config();
 console.log('RYSE Wears - MongoDB Connection Fix');
 console.log('==================================\n');
 
-// Check current MongoDB URL
 console.log('Current MONGODB_URL:');
 console.log(process.env.MONGODB_URL);
 console.log('');
 
-// Parse the connection string to show components
 try {
   const url = new URL(process.env.MONGODB_URL);
   console.log('Connection Details:');
   console.log('- Host:', url.hostname);
   console.log('- Database:', url.pathname.substring(1));
   console.log('- Username:', url.username);
-  console.log('- Password: ********'); // Don't show password
+  console.log('- Password: ********');
   console.log('');
 } catch (error) {
   console.log('Could not parse MongoDB URL:', error.message);
@@ -52,12 +50,10 @@ console.log('2. The frontend will work with mock data');
 console.log('3. Set MONGODB_URL environment variable in Vercel dashboard');
 console.log('4. Vercel will use the environment variable at runtime');
 
-// Let's try to connect with more detailed error handling
 const testConnection = async () => {
   try {
     console.log('\nTesting connection with detailed options...');
     
-    // Try connecting with more specific options
     await mongoose.connect(process.env.MONGODB_URL, {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,

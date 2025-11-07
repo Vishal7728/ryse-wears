@@ -1,12 +1,10 @@
 const crypto = require('crypto');
 
-// Razorpay webhook handler
 const handleRazorpayWebhook = async (req, res) => {
   try {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
     const signature = req.headers['x-razorpay-signature'];
 
-    // Verify webhook signature
     if (webhookSecret) {
       const expectedSignature = crypto
         .createHmac('sha256', webhookSecret)
@@ -27,7 +25,6 @@ const handleRazorpayWebhook = async (req, res) => {
     console.log('Webhook Event:', event);
     console.log('Webhook Payload:', payload);
 
-    // Handle different webhook events
     switch (event) {
       case 'payment.authorized':
         console.log('Payment authorized:', payload.payment.entity.id);
@@ -35,12 +32,10 @@ const handleRazorpayWebhook = async (req, res) => {
 
       case 'payment.captured':
         console.log('Payment captured:', payload.payment.entity.id);
-        // Update order status in database
         break;
 
       case 'payment.failed':
         console.log('Payment failed:', payload.payment.entity.id);
-        // Handle failed payment
         break;
 
       case 'order.paid':

@@ -17,7 +17,6 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover-lift group dark:border dark:border-purple-500/20 relative transition-all duration-300">
-      {/* Simplified border effect for better performance */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 opacity-0 dark:group-hover:opacity-30 transition-opacity duration-300 pointer-events-none"></div>
       
       <Link href={`/products/${product.id}`} className="block relative z-10">

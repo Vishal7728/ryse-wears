@@ -47,7 +47,6 @@ const orderSchema = new mongoose.Schema({
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
-// Calculate total amount before saving
 orderSchema.pre('save', function(next) {
   if (this.isModified('items')) {
     this.total_amount = this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
