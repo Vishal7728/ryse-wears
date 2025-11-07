@@ -94,6 +94,71 @@ export default function ProductDetailPage() {
   }
 
   if (!product) {
+    // Mock product data for testing
+    const mockProduct: Product = {
+      _id: params.id as string,
+      name: 'Designer Silk Saree',
+      description: 'Elegant pure silk saree with intricate embroidery. Perfect for weddings and special occasions.',
+      price: 3499,
+      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
+      category: 'Sarees',
+      subcategory: 'Sarees',
+      gender: 'Women',
+      sizes: ['S', 'M', 'L', 'XL'],
+      colors: ['Red', 'Blue', 'Green'],
+      stock: 10
+    };
+    
+    // Check if ID matches one of our mock products
+    const mockProducts: Product[] = [
+      {
+        _id: '1',
+        name: 'Designer Silk Saree',
+        description: 'Elegant pure silk saree with intricate embroidery. Perfect for weddings and special occasions.',
+        price: 3499,
+        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
+        category: 'Sarees',
+        subcategory: 'Sarees',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Red', 'Blue', 'Green'],
+        stock: 10
+      },
+      {
+        _id: '2',
+        name: 'Banarasi Silk Saree',
+        description: 'Traditional Banarasi silk saree with zari work. Handwoven with gold and silver threads.',
+        price: 4999,
+        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=800&h=1000&fit=crop',
+        category: 'Sarees',
+        subcategory: 'Sarees',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Gold', 'Silver', 'Bronze'],
+        stock: 5
+      },
+      {
+        _id: '3',
+        name: 'Anarkali Suit',
+        description: 'Beautiful Anarkali suit with heavy embroidery. Perfect for festive occasions.',
+        price: 2999,
+        image: 'https://images.unsplash.com/photo-1614095851165-d3e4b7e70b85?w=800&h=1000&fit=crop',
+        category: 'Suits',
+        subcategory: 'Suits',
+        gender: 'Women',
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Pink', 'Blue', 'Green'],
+        stock: 8
+      }
+    ];
+    
+    const foundProduct = mockProducts.find(p => p._id === params.id);
+    if (foundProduct) {
+      setProduct(foundProduct);
+      setLoading(false);
+      return null;
+    }
+    
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
         <Header />

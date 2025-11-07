@@ -22,7 +22,14 @@ const imageUpdates = {
 const updateProductImages = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.DATABASE_URL);
+    const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
+    if (!mongoUrl) {
+      console.error('No MongoDB URL found in environment variables');
+      process.exit(1);
+    }
+    
+    console.log('Connecting to MongoDB...');
+    await mongoose.connect(mongoUrl);
     console.log('MongoDB Connected for updating images...');
 
     let updateCount = 0;
@@ -49,7 +56,7 @@ const updateProductImages = async () => {
     console.log('Database connection closed');
     process.exit(0);
   } catch (error) {
-    console.error('Error updating product images:', error);
+    console.error('Error updating product images:', error.message);
     process.exit(1);
   }
 };

@@ -101,7 +101,7 @@ export default function ClientProductsPage() {
           name: 'Designer Silk Saree',
           price: 3499,
           description: 'Elegant pure silk saree with intricate embroidery',
-          image: 'https://placehold.co/600x800/red/white?text=Designer+Silk+Saree',
+          image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=1000&fit=crop',
           category: 'Sarees',
           subcategory: 'Sarees',
           gender: 'Women'
@@ -111,7 +111,7 @@ export default function ClientProductsPage() {
           name: 'Banarasi Silk Saree',
           price: 4999,
           description: 'Traditional Banarasi silk saree with zari work',
-          image: 'https://placehold.co/600x800/0000FF/white?text=Banarasi+Silk+Saree',
+          image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=800&h=1000&fit=crop',
           category: 'Sarees',
           subcategory: 'Sarees',
           gender: 'Women'
@@ -121,7 +121,7 @@ export default function ClientProductsPage() {
           name: 'Anarkali Suit',
           price: 2999,
           description: 'Beautiful Anarkali suit with heavy embroidery',
-          image: 'https://placehold.co/600x800/FF1493/white?text=Anarkali+Suit',
+          image: 'https://images.unsplash.com/photo-1614095851165-d3e4b7e70b85?w=800&h=1000&fit=crop',
           category: 'Suits',
           subcategory: 'Suits',
           gender: 'Women'
@@ -131,7 +131,7 @@ export default function ClientProductsPage() {
           name: 'Punjabi Suit',
           price: 1899,
           description: 'Vibrant Punjabi suit with phulkari embroidery',
-          image: 'https://placehold.co/600x800/FFD700/black?text=Punjabi+Suit',
+          image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&h=1000&fit=crop',
           category: 'Suits',
           subcategory: 'Suits',
           gender: 'Women'
@@ -141,7 +141,7 @@ export default function ClientProductsPage() {
           name: 'Lehenga Choli',
           price: 8999,
           description: 'Stunning bridal lehenga choli with mirror work',
-          image: 'https://placehold.co/600x800/8B0000/white?text=Lehenga+Choli',
+          image: 'https://images.unsplash.com/photo-1595341595155-9f8cd95d3e5f?w=800&h=1000&fit=crop',
           category: 'Lehenga',
           subcategory: 'Lehenga',
           gender: 'Women'
@@ -151,7 +151,7 @@ export default function ClientProductsPage() {
           name: 'Kurta Pajama Set',
           price: 1499,
           description: 'Classic mens kurta pajama in premium cotton',
-          image: 'https://placehold.co/600x800/F5F5DC/black?text=Kurta+Pajama',
+          image: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=800&h=1000&fit=crop',
           category: 'Kurta',
           subcategory: 'Kurta',
           gender: 'Men'
@@ -161,7 +161,7 @@ export default function ClientProductsPage() {
           name: 'Sherwani',
           price: 6499,
           description: 'Royal sherwani with intricate embroidery',
-          image: 'https://placehold.co/600x800/DAA520/white?text=Sherwani',
+          image: 'https://images.unsplash.com/photo-1606219592522-af678b8e0c8e?w=800&h=1000&fit=crop',
           category: 'Sherwani',
           subcategory: 'Sherwani',
           gender: 'Men'
@@ -171,7 +171,7 @@ export default function ClientProductsPage() {
           name: 'Nehru Jacket',
           price: 2299,
           description: 'Contemporary Nehru jacket with modern cuts',
-          image: 'https://placehold.co/600x800/000000/white?text=Nehru+Jacket',
+          image: 'https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=800&h=1000&fit=crop',
           category: 'Jackets',
           subcategory: 'Jackets',
           gender: 'Men'
