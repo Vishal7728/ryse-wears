@@ -9,9 +9,7 @@ import { API_URL } from '../../config/api';
 
 declare global {
   interface Window {
-    Razorpay: new (options: RazorpayOptions) => {
-      open: () => void;
-    };
+    Razorpay: new (options: RazorpayOptions) => { open: () => void };
   }
 }
 
@@ -25,23 +23,10 @@ interface RazorpayOptions {
   order_id: string;
   callback_url: string;
   redirect: boolean;
-  prefill: {
-    name: string;
-    email: string;
-    contact: string;
-  };
-  notes: {
-    address: string;
-    city: string;
-    state: string;
-    pincode: string;
-  };
-  theme: {
-    color: string;
-  };
-  modal: {
-    ondismiss: () => void;
-  };
+  prefill: { name: string; email: string; contact: string };
+  notes: { address: string; city: string; state: string; pincode: string };
+  theme: { color: string };
+  modal: { ondismiss: () => void };
   handler: (response: RazorpayResponse) => void;
 }
 
@@ -55,331 +40,136 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    pincode: '',
-  });
-
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', city: '', state: '', pincode: '' });
   const shipping = 49.99;
-  const tax = total * 0.18; // 18% GST
+  const tax = total * 0.18;
   const grandTotal = total + shipping + tax;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
-  const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
-  };
+  const loadRazorpayScript = () => new Promise<boolean>((resolve) => {
+    const existing = document.querySelector<HTMLScriptElement>('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+    if (existing) { resolve(true); return; }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
 
   const handlePayment = async () => {
-    // Validate form
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
-      alert('Please fill in all required fields');
+      alert('Please fill in your name, email, phone and address.');
       return;
     }
-
     setLoading(true);
-
     try {
-      // Load Razorpay script
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) {
-        alert('Failed to load payment gateway. Please try again.');
-        setLoading(false);
-        return;
-      }
-
-      // Create order on backend
-      const orderResponse = await fetch(`${API_URL}/api/payment/create-order`, {
+      const loaded = await loadRazorpayScript();
+      if (!loaded) throw new Error('Could not load the payment gateway.');
+      const orderResponse = await fetch(\`\${API_URL}/api/payment/create-order\`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: Math.round(grandTotal),
-          currency: 'INR',
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: Math.round(grandTotal), currency: 'INR' }),
       });
-
       const orderData = await orderResponse.json();
+      if (!orderResponse.ok || !orderData.success) throw new Error(orderData.message || 'Failed to create payment order.');
 
-      if (!orderData.success) {
-        throw new Error('Failed to create order');
-      }
-
-      // Razorpay options
-      const options = {
+      const options: RazorpayOptions = {
         key: orderData.key_id,
         amount: orderData.order.amount,
         currency: orderData.order.currency,
-        name: 'RYSE Wears',
-        description: 'Fashion Purchase',
-        image: '/logo.png', // Add your logo here
+        name: 'RYSE WEARS',
+        description: 'Fashion purchase',
+        image: '/icon.svg',
         order_id: orderData.order.id,
         callback_url: orderData.callback_url,
         redirect: false,
-        prefill: {
-          name: formData.name,
-          email: formData.email,
-          contact: formData.phone,
-        },
-        notes: {
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          pincode: formData.pincode,
-        },
-        theme: {
-          color: '#4F46E5',
-        },
-        modal: {
-          ondismiss: function() {
-            setLoading(false);
-          },
-        },
-        handler: async function (response: RazorpayResponse) {
-          // Verify payment
-          const verifyResponse = await fetch(`${API_URL}/api/payment/verify`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          });
-
-          const verifyData = await verifyResponse.json();
-
-          if (verifyData.success) {
+        prefill: { name: formData.name, email: formData.email, contact: formData.phone },
+        notes: { address: formData.address, city: formData.city, state: formData.state, pincode: formData.pincode },
+        theme: { color: '#762f3d' },
+        modal: { ondismiss: () => setLoading(false) },
+        handler: async (payment) => {
+          try {
+            const verifyResponse = await fetch(\`\${API_URL}/api/payment/verify\`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: payment.razorpay_order_id,
+                razorpay_payment_id: payment.razorpay_payment_id,
+                razorpay_signature: payment.razorpay_signature,
+              }),
+            });
+            const verifyData = await verifyResponse.json();
+            if (!verifyResponse.ok || !verifyData.success) throw new Error('Payment verification failed. Please contact support.');
             clearCart();
-            if (typeof window !== 'undefined') {
-              // Non-blocking toast notification
-              const evt = new CustomEvent('order:status', { detail: { status: 'paid', id: verifyData.payment_details.payment_id } });
-              window.dispatchEvent(evt);
-            }
+            window.dispatchEvent(new CustomEvent('order:status', { detail: { status: 'paid', id: verifyData.payment_details?.payment_id || payment.razorpay_payment_id } }));
             router.push('/');
-          } else {
-            alert('Payment verification failed. Please contact support.');
+          } catch (error) {
+            alert(error instanceof Error ? error.message : 'Payment verification failed.');
+          } finally {
+            setLoading(false);
           }
         },
       };
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
+      new window.Razorpay(options).open();
     } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment failed. Please try again.');
-    } finally {
+      alert(error instanceof Error ? error.message : 'Payment could not be started.');
       setLoading(false);
     }
   };
 
-  if (items.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
-        <Header />
-        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Your cart is empty</h2>
-          <button
-            onClick={() => router.push('/products')}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700"
-          >
-            Continue Shopping
-          </button>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+  const fieldClass = 'mt-2 w-full border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm text-[var(--foreground)] outline-none transition-colors focus:border-[var(--accent)]';
+  if (!items.length) return (
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]"><Header />
+      <section className="mx-auto max-w-3xl px-5 py-24 text-center"><h1 className="font-display text-3xl font-semibold">Your bag is empty.</h1><p className="mt-3 text-sm text-[var(--muted)]">Add a piece to your bag before checking out.</p><button onClick={() => router.push('/products')} className="mt-7 bg-[var(--accent)] px-7 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[var(--accent-strong)]">Explore the collection</button></section><Footer />
+    </main>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Header />
+      <section className="mx-auto max-w-[1280px] px-5 py-10 sm:px-8 sm:py-14">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">RYSE WEARS / SECURE CHECKOUT</p>
+        <h1 className="mt-3 font-display text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">Almost yours<span className="text-[var(--accent)]">.</span></h1>
+        <p className="mt-3 text-sm text-[var(--muted)]">Add your delivery details to complete your order.</p>
 
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-8">Checkout</h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Shipping Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Shipping Information</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Address *
-                  </label>
-                  <textarea
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      State
-                    </label>
-                    <input
-                      type="text"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Pincode
-                    </label>
-                    <input
-                      type="text"
-                      name="pincode"
-                      value={formData.pincode}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-slate-700 dark:text-white"
-                    />
-                  </div>
-                </div>
+        <div className="mt-9 grid gap-8 lg:grid-cols-[1fr_360px]">
+          <section className="border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-9">
+            <h2 className="font-display text-xl font-semibold">Delivery information</h2>
+            <div className="mt-7 space-y-5">
+              <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Full name *</span><input name="name" autoComplete="name" value={formData.name} onChange={handleInputChange} className={fieldClass} required /></label>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Email *</span><input type="email" name="email" autoComplete="email" value={formData.email} onChange={handleInputChange} className={fieldClass} required /></label>
+                <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Phone *</span><input type="tel" name="phone" autoComplete="tel" value={formData.phone} onChange={handleInputChange} className={fieldClass} required /></label>
+              </div>
+              <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Address *</span><textarea name="address" autoComplete="street-address" rows={3} value={formData.address} onChange={handleInputChange} className={fieldClass} required /></label>
+              <div className="grid gap-5 sm:grid-cols-3">
+                <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">City</span><input name="city" autoComplete="address-level2" value={formData.city} onChange={handleInputChange} className={fieldClass} /></label>
+                <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">State</span><input name="state" autoComplete="address-level1" value={formData.state} onChange={handleInputChange} className={fieldClass} /></label>
+                <label className="block"><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Pincode</span><input name="pincode" autoComplete="postal-code" value={formData.pincode} onChange={handleInputChange} className={fieldClass} /></label>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Order Summary</h2>
-              
-              <div className="space-y-4 mb-6">
-                {items.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">
-                      {item.name} × {item.quantity}
-                    </span>
-                    <span className="text-gray-900 dark:text-white font-medium">
-                      ₹{(item.price * item.quantity).toFixed(2)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
-                  <span className="text-gray-900 dark:text-white">₹{total.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Shipping</span>
-                  <span className="text-gray-900 dark:text-white">₹{shipping.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">GST (18%)</span>
-                  <span className="text-gray-900 dark:text-white">₹{tax.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-lg font-bold border-t border-gray-200 dark:border-gray-700 pt-2">
-                  <span className="text-gray-900 dark:text-white">Total</span>
-                  <span className="text-indigo-600 dark:text-indigo-400">₹{grandTotal.toFixed(2)}</span>
-                </div>
-              </div>
-
-              <button
-                onClick={handlePayment}
-                disabled={loading}
-                className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Processing...' : 'Pay with Razorpay'}
-              </button>
-
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                Secure payment powered by Razorpay
-              </p>
+          <aside className="h-fit border border-[var(--border)] bg-[var(--surface)] p-6 lg:sticky lg:top-28">
+            <h2 className="font-display text-xl font-semibold">Order summary</h2>
+            <div className="mt-6 space-y-4 border-b border-[var(--border)] pb-5">
+              {items.map((item) => <div key={String(item.id ?? item._id)} className="flex justify-between gap-4 text-xs"><span className="text-[var(--muted)]">{item.name} × {item.quantity}</span><span className="shrink-0 font-semibold">₹{(item.price * item.quantity).toFixed(2)}</span></div>)}
             </div>
-          </div>
+            <div className="mt-5 space-y-3 text-sm">
+              <div className="flex justify-between text-[var(--muted)]"><span>Subtotal</span><span className="text-[var(--foreground)]">₹{total.toFixed(2)}</span></div>
+              <div className="flex justify-between text-[var(--muted)]"><span>Shipping</span><span className="text-[var(--foreground)]">₹{shipping.toFixed(2)}</span></div>
+              <div className="flex justify-between text-[var(--muted)]"><span>GST (18%)</span><span className="text-[var(--foreground)]">₹{tax.toFixed(2)}</span></div>
+              <div className="flex justify-between border-t border-[var(--border)] pt-4 font-semibold"><span>Total</span><span className="text-[var(--accent)]">₹{grandTotal.toFixed(2)}</span></div>
+            </div>
+            <button type="button" onClick={handlePayment} disabled={loading} className="mt-7 min-h-12 w-full bg-[var(--accent)] px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[var(--accent-strong)] disabled:cursor-not-allowed disabled:opacity-60">{loading ? 'Processing…' : 'Pay securely with Razorpay'}</button>
+            <p className="mt-4 text-center text-[10px] text-[var(--muted)]">Secure payment powered by Razorpay</p>
+          </aside>
         </div>
-      </div>
-
+      </section>
       <Footer />
-    </div>
+    </main>
   );
 }
