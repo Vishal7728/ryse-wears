@@ -68,7 +68,7 @@ export default function CheckoutPage() {
     try {
       const loaded = await loadRazorpayScript();
       if (!loaded) throw new Error('Could not load the payment gateway.');
-      const orderResponse = await fetch(\`\${API_URL}/api/payment/create-order\`, {
+      const orderResponse = await fetch(`${API_URL}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: Math.round(grandTotal), currency: 'INR' }),
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
         modal: { ondismiss: () => setLoading(false) },
         handler: async (payment) => {
           try {
-            const verifyResponse = await fetch(\`\${API_URL}/api/payment/verify\`, {
+            const verifyResponse = await fetch(`${API_URL}/api/payment/verify`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
