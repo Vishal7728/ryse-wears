@@ -23,8 +23,17 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "RYSE Wears - Fashion E-commerce",
-  description: "Discover the latest fashion trends at RYSE Wears. Shop our exclusive collection of clothing and accessories.",
+  title: {
+    default: "RYSE WEARS — Style that speaks for you",
+    template: "%s | RYSE WEARS",
+  },
+  description: "Discover versatile pieces, thoughtful details and fresh ways to make every look your own at RYSE WEARS.",
+  applicationName: "RYSE WEARS",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: ["/icon.svg"],
+    apple: ["/icon.svg"],
+  },
 };
 
 export default function RootLayout({
@@ -34,19 +43,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.variable} ${montserrat.variable} antialiased`}
-      >
-        <Script
-          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-          strategy="lazyOnload"
-        />
+      <body className={\`\${lato.variable} \${montserrat.variable} antialiased\`}>
+        <Script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" strategy="lazyOnload" />
         <DarkModeProvider>
           <CartProvider>
             <DarkModePattern />
-            <div className="relative z-10">
-              {children}
-            </div>
+            <div className="relative z-10">{children}</div>
             <CookieConsent />
             <AIChatWidget />
           </CartProvider>
