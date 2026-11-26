@@ -30,7 +30,7 @@ export default function Footer() {
         <div className="grid gap-12 border-b border-white/15 pb-12 md:grid-cols-[1.5fr_1fr_1fr_1.3fr]">
           <div className="max-w-sm">
             <Link href="/" className="inline-flex items-center gap-3" aria-label="RYSE Wears home">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8b3b4b] text-lg font-extrabold text-white">R</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8b3b4b] text-white"><svg viewBox="0 0 64 64" className="h-7 w-7" aria-hidden="true"><path d="M19 46V17h14c8 0 13 4 13 11 0 5-3 9-8 10l9 8H35l-8-8h-1v8zm7-14h7c4 0 6-1 6-4s-2-4-6-4h-7z" fill="currentColor"/></svg></span>
               <span className="font-display text-xl font-extrabold tracking-[-0.06em]">RYSE WEARS</span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-7 text-white/60">Considered pieces. Confident style. Discover clothing that feels like you.</p>
