@@ -43,7 +43,7 @@ export default function ProductDetailPage() {
 
   const fetchProduct = useCallback(async () => {
     try {
-      const response = await fetch(\`\${API_URL}/api/products/\${params.id}\`);
+      const response = await fetch(`${API_URL}/api/products/${params.id}`);
       if (!response.ok) throw new Error('Product not found');
       const data = await response.json();
       setProduct(data);
@@ -107,12 +107,12 @@ export default function ProductDetailPage() {
 
             <div className="border-b border-[var(--border)] py-6">
               <div className="flex items-center justify-between"><h2 className="text-[10px] font-bold uppercase tracking-[0.16em]">Select size</h2><span className="text-[10px] text-[var(--muted)]">Choose your fit</span></div>
-              <div className="mt-4 flex flex-wrap gap-2">{sizes.map((size) => <button key={size} type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size} className={\`min-w-12 border px-4 py-3 text-xs font-semibold transition-colors \${selectedSize === size ? 'border-[var(--accent)] bg-[var(--accent)] text-white' : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] hover:text-[var(--accent)]'}\`}>{size}</button>)}</div>
+              <div className="mt-4 flex flex-wrap gap-2">{sizes.map((size) => <button key={size} type="button" onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size} className={`min-w-12 border px-4 py-3 text-xs font-semibold transition-colors ${selectedSize === size ? 'border-[var(--accent)] bg-[var(--accent)] text-white' : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] hover:text-[var(--accent)]'}`}>{size}</button>)}</div>
             </div>
 
             <div className="border-b border-[var(--border)] py-6">
               <h2 className="text-[10px] font-bold uppercase tracking-[0.16em]">Select colour</h2>
-              <div className="mt-4 flex flex-wrap gap-2">{colors.map((color) => <button key={color} type="button" onClick={() => setSelectedColor(color)} aria-pressed={selectedColor === color} className={\`border px-4 py-3 text-xs font-semibold transition-colors \${selectedColor === color ? 'border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]' : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]'}\`}>{color}</button>)}</div>
+              <div className="mt-4 flex flex-wrap gap-2">{colors.map((color) => <button key={color} type="button" onClick={() => setSelectedColor(color)} aria-pressed={selectedColor === color} className={`border px-4 py-3 text-xs font-semibold transition-colors ${selectedColor === color ? 'border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]' : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]'}`}>{color}</button>)}</div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 border-b border-[var(--border)] py-6">
@@ -122,7 +122,7 @@ export default function ProductDetailPage() {
                 <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
                 <button type="button" onClick={() => setQuantity((value) => Math.min(product.stock || 99, value + 1))} className="h-10 w-10 transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]" aria-label="Increase quantity">+</button>
               </div>
-              <span className="text-xs text-[var(--muted)]">{typeof product.stock === 'number' ? \`\${product.stock} available\` : 'Ready to wear'}</span>
+              <span className="text-xs text-[var(--muted)]">{typeof product.stock === 'number' ? `${product.stock} available` : 'Ready to wear'}</span>
             </div>
 
             <button type="button" onClick={handleAddToCart} className="mt-6 min-h-12 w-full bg-[var(--accent)] px-6 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[var(--accent-strong)] focus-visible:outline-offset-4">{added ? 'Added to bag ✓' : 'Add to bag'}</button>
