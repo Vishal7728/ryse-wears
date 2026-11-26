@@ -46,9 +46,9 @@ export default function CartPage() {
                       </div>
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center border border-[var(--border)]">
-                          <button type="button" onClick={() => updateQuantity(itemId, Math.max(1, item.quantity - 1))} disabled={item.quantity <= 1} className="h-9 w-9 transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)] disabled:opacity-40" aria-label={\`Decrease \${item.name} quantity\`}>−</button>
+                          <button type="button" onClick={() => updateQuantity(itemId, Math.max(1, item.quantity - 1))} disabled={item.quantity <= 1} className="h-9 w-9 transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)] disabled:opacity-40" aria-label={`Decrease ${item.name} quantity`}>−</button>
                           <span className="w-9 text-center text-xs font-semibold">{item.quantity}</span>
-                          <button type="button" onClick={() => updateQuantity(itemId, item.quantity + 1)} className="h-9 w-9 transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]" aria-label={\`Increase \${item.name} quantity\`}>+</button>
+                          <button type="button" onClick={() => updateQuantity(itemId, item.quantity + 1)} className="h-9 w-9 transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]" aria-label={`Increase ${item.name} quantity`}>+</button>
                         </div>
                         <button type="button" onClick={() => removeItem(itemId)} className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]">Remove</button>
                       </div>
