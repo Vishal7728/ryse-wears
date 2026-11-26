@@ -37,7 +37,7 @@ export default function CartPage() {
                 return (
                   <article key={String(itemId)} className="flex gap-4 border border-[var(--border)] bg-[var(--surface)] p-4 sm:gap-6 sm:p-5">
                     <div className="relative h-28 w-24 shrink-0 overflow-hidden bg-[#eee9e4] sm:h-36 sm:w-28">
-                      <Image src={item.image} alt={item.name} fill unoptimized sizes="112px" className="object-cover" />
+                      <Image src={item.image} alt={item.name} fill sizes="112px" className="object-cover" quality={70} />
                     </div>
                     <div className="flex min-w-0 flex-1 flex-col justify-between gap-4">
                       <div className="flex flex-wrap justify-between gap-3">
