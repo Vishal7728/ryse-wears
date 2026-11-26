@@ -92,7 +92,7 @@ export default function ProductDetailPage() {
         <div className="grid gap-9 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div className="relative overflow-hidden bg-[#eee9e4] dark:bg-[#302927]">
             <div className="relative aspect-[4/5]">
-              <Image src={product.image} alt={product.name} fill priority unoptimized sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+              <Image src={product.image} alt={product.name} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" quality={78} />
             </div>
             <span className="absolute left-4 top-4 bg-white/90 px-3 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-[#4c3938]">{product.subcategory || product.category}</span>
           </div>
