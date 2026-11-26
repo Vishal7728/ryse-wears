@@ -76,7 +76,7 @@ export default function ClientProductsPage() {
       if (searchQuery) params.set('search', searchQuery);
 
       try {
-        const response = await fetch(\`\${API_URL}/api/products?\${params.toString()}\`, { signal: controller.signal });
+        const response = await fetch(`${API_URL}/api/products?${params.toString()}`, { signal: controller.signal });
         if (!response.ok) throw new Error('Product service returned an error');
         const data = await response.json();
         const rows: ApiProduct[] = Array.isArray(data) ? data : Array.isArray(data.products) ? data.products : [];
@@ -102,7 +102,7 @@ export default function ClientProductsPage() {
         setProducts(fallbackProducts.filter((item) =>
           (selectedGender === 'All' || item.gender?.toLowerCase() === selectedGender.toLowerCase()) &&
           (selectedCategory === 'All' || item.category?.toLowerCase() === selectedCategory.toLowerCase()) &&
-          (!query || \`\${item.name} \${item.description} \${item.category}\`.toLowerCase().includes(query))
+          (!query || `${item.name} ${item.description} ${item.category}`.toLowerCase().includes(query))
         ));
       } finally {
         if (!controller.signal.aborted) setLoading(false);
@@ -153,7 +153,7 @@ export default function ClientProductsPage() {
               { label: 'Women', value: 'Women' },
             ].map((option) => (
               <button key={option.value} type="button" onClick={() => setSelectedGender(option.value)} aria-pressed={selectedGender === option.value}
-                className={\`border px-5 py-3 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors duration-200 focus-visible:outline-offset-4 \${selectedGender === option.value ? 'border-[var(--accent)] bg-[var(--accent)] text-white' : 'border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]'}\`}>
+                className={`border px-5 py-3 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors duration-200 focus-visible:outline-offset-4 ${selectedGender === option.value ? 'border-[var(--accent)] bg-[var(--accent)] text-white' : 'border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]'}`}>
                 {option.label}
               </button>
             ))}
@@ -181,7 +181,7 @@ export default function ClientProductsPage() {
         </div>
 
         <div className="flex items-center justify-between py-6">
-          <p className="text-xs text-[var(--muted)]">{loading ? 'Finding your pieces…' : \`\${visibleProducts.length} pieces\`}</p>
+          <p className="text-xs text-[var(--muted)]">{loading ? 'Finding your pieces…' : `${visibleProducts.length} pieces`}</p>
           {(selectedGender !== 'All' || selectedCategory !== 'All' || searchInput) && (
             <button type="button" onClick={() => { setSelectedGender('All'); setSelectedCategory('All'); setSearchInput(''); setSearchQuery(''); }} className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--accent)] transition-colors hover:text-[var(--accent-strong)]">Clear filters</button>
           )}
