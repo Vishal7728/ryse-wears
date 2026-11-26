@@ -1,10 +1,11 @@
 'use client';
 
-import Link from "next/link";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ProductCard from "../components/ProductCard";
-import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ProductCard from '../components/ProductCard';
+import { useEffect, useState } from 'react';
 import { API_URL } from '../config/api';
 
 interface FeaturedProduct {
@@ -26,466 +27,268 @@ interface MongoProduct {
   subcategory?: string;
 }
 
-const banners = [
+const categories = [
   {
-    title: "New Collection",
-    description: "Discover the latest trends in fashion with our exclusive collection. Elevate your style today.",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80",
-    buttonPrimary: "Shop Now",
-    buttonSecondary: "Learn More",
-    textColor: "text-white",
-    buttonPrimaryBg: "bg-white text-gray-900 hover:bg-gray-100",
-    buttonSecondaryBg: "bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900"
+    label: 'Men',
+    detail: 'Everyday essentials and considered layers',
+    href: '/products?gender=Men',
+    image: 'https://images.unsplash.com/photo-1516826957135-700d48eaa4e8?w=900&q=85',
+    position: 'center 28%',
   },
   {
-    title: "Summer Sale",
-    description: "Get up to 50% off on selected items. Limited time offer. Don't miss out!",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&q=80",
-    buttonPrimary: "Shop Sale",
-    buttonSecondary: "View All",
-    textColor: "text-white",
-    buttonPrimaryBg: "bg-gradient-to-r from-orange-500 to-pink-500 text-white hover:from-orange-600 hover:to-pink-600",
-    buttonSecondaryBg: "bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-orange-600"
+    label: 'Women',
+    detail: 'Modern silhouettes, made to move',
+    href: '/products?gender=Women',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=85',
+    position: 'center 30%',
   },
   {
-    title: "Premium Quality",
-    description: "Handpicked designs crafted with finest materials. Experience luxury fashion.",
-    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b??w=1920&q=80",
-    buttonPrimary: "Explore",
-    buttonSecondary: "About Us",
-    textColor: "text-white",
-    buttonPrimaryBg: "bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:from-teal-600 hover:to-cyan-600",
-    buttonSecondaryBg: "bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-teal-600"
+    label: 'Explore all',
+    detail: 'Find your next favourite piece',
+    href: '/products',
+    image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=900&q=85',
+    position: 'center',
   },
-  {
-    title: "Trending Now",
-    description: "Stay ahead with the hottest styles of the season. Fashion that speaks volumes.",
-    image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=1920&q=80",
-    buttonPrimary: "See Trends",
-    buttonSecondary: "Collections",
-    textColor: "text-white",
-    buttonPrimaryBg: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600",
-    buttonSecondaryBg: "bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-purple-600"
-  }
 ];
 
 export default function Home() {
-  const [currentBanner, setCurrentBanner] = useState(0);
   const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % banners.length);
-    }, 5000);
+    const controller = new AbortController();
 
-    return () => clearInterval(interval);
-  }, []);
+    const fetchFeaturedProducts = async () => {
+      try {
+        const response = await fetch(\`\${API_URL}/api/products?limit=8\`, { signal: controller.signal });
+        if (!response.ok) throw new Error('Unable to load featured products');
 
-  const fetchFeaturedProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${API_URL}/api/products?limit=8`);
-      const data = await response.json();
-      
-      const productsData = data.products || data;
-      
-      const products = productsData.slice(0, 8).map((product: MongoProduct) => ({
-        id: product._id,
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        image: product.image,
-        category: product.subcategory || product.category || 'General'
-      }));
-      
-      setFeaturedProducts(products);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setFeaturedProducts([
-        {
-          id: 1,
-          name: 'Classic White T-Shirt',
-          price: 799,
-          description: 'Premium cotton crew neck t-shirt',
-          image: '/images/products/male/classic-white-tshirt.jpg',
-          category: 'Tops'
-        },
-        {
-          id: 2,
-          name: 'Slim Fit Jeans',
-          price: 1899,
-          description: 'Modern slim fit jeans with stretch fabric',
-          image: '/images/products/male/slim-fit-jeans.jpg',
-          category: 'Bottoms'
-        },
-        {
-          id: 3,
-          name: 'Black Leather Jacket',
-          price: 4999,
-          description: 'Genuine leather biker jacket',
-          image: '/images/products/male/black-leather-jacket.jpg',
-          category: 'Outerwear'
-        },
-        {
-          id: 4,
-          name: 'Off-Shoulder Top',
-          price: 1199,
-          description: 'Trendy off-shoulder top with elastic neckline',
-          image: '/images/products/female/off-shoulder-top.jpg',
-          category: 'Tops'
-        }
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+        const data = await response.json();
+        const productsData = Array.isArray(data) ? data : data.products || [];
+        const products = productsData.slice(0, 8).map((product: MongoProduct) => ({
+          id: product._id,
+          name: product.name,
+          price: Number(product.price),
+          description: product.description,
+          image: product.image,
+          category: product.subcategory || product.category || 'General',
+        }));
 
-  useEffect(() => {
+        setFeaturedProducts(products);
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') return;
+        console.error('Error fetching featured products:', error);
+        setFeaturedProducts([
+          {
+            id: 1,
+            name: 'Classic White T-Shirt',
+            price: 799,
+            description: 'Premium cotton crew neck t-shirt',
+            image: '/images/products/male/classic-white-tshirt.jpg',
+            category: 'Tops',
+          },
+          {
+            id: 2,
+            name: 'Slim Fit Jeans',
+            price: 1899,
+            description: 'Modern slim fit jeans with stretch fabric',
+            image: '/images/products/male/slim-fit-jeans.jpg',
+            category: 'Bottoms',
+          },
+          {
+            id: 3,
+            name: 'Black Leather Jacket',
+            price: 4999,
+            description: 'Genuine leather biker jacket',
+            image: '/images/products/male/black-leather-jacket.jpg',
+            category: 'Outerwear',
+          },
+          {
+            id: 4,
+            name: 'Off-Shoulder Top',
+            price: 1199,
+            description: 'Trendy off-shoulder top with elastic neckline',
+            image: '/images/products/female/off-shoulder-top.jpg',
+            category: 'Tops',
+          },
+        ]);
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    };
+
     fetchFeaturedProducts();
+    return () => controller.abort();
   }, []);
-  
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 transition-colors page-transition">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Header />
 
-      <div className="bg-gradient-to-r from-red-600 via-orange-500 to-red-600 text-white py-3 overflow-hidden relative">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-shimmer"></div>
-        <div className="relative flex items-center">
-          <span className="inline-flex items-center px-4 py-1 bg-yellow-400 text-red-900 font-bold text-sm rounded-full mr-4 ml-4 animate-pulse">
-            FLASH DEAL
-          </span>
-          <div className="flex animate-marquee whitespace-nowrap">
-            <span className="mx-8 text-lg font-bold">UP TO 70% OFF on Western Wear!</span>
-            <span className="mx-8 text-lg font-bold">Limited Time: Premium Blazers ₹1,999 (Save ₹3,000)</span>
-            <span className="mx-8 text-lg font-bold">Denim Jackets ₹999 Only - Hurry!</span>
-            <span className="mx-8 text-lg font-bold">Buy 2 Get 1 FREE on All Shirts</span>
-            <span className="mx-8 text-lg font-bold">Flash Sale Ends in 6 Hours!</span>
-            <span className="mx-8 text-lg font-bold">Free Shipping on Orders Above ₹1,500</span>
-            <span className="mx-8 text-lg font-bold">UP TO 70% OFF on Western Wear!</span>
-            <span className="mx-8 text-lg font-bold">Limited Time: Premium Blazers ₹1,999 (Save ₹3,000)</span>
-            <span className="mx-8 text-lg font-bold">Denim Jackets ₹999 Only - Hurry!</span>
-            <span className="mx-8 text-lg font-bold">Buy 2 Get 1 FREE on All Shirts</span>
-            <span className="mx-8 text-lg font-bold">Flash Sale Ends in 6 Hours!</span>
-            <span className="mx-8 text-lg font-bold">Free Shipping on Orders Above ₹1,500</span>
-          </div>
-        </div>
+      <div className="bg-[#762f3d] px-4 py-2.5 text-center text-[9px] font-bold uppercase tracking-[0.19em] text-white sm:text-[10px]">
+        RYSE WEARS <span className="mx-2 text-white/50">/</span> A considered approach to everyday style
       </div>
 
-      <div className="relative h-screen overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
-          style={{
-            backgroundImage: `url(${banners[currentBanner].image})`,
-          }}
-        >
-          <div className="absolute inset-0 bg-black/40"></div>
-          
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6TTEyIDM0YzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6bTAtMTBjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00ek0yNCAzNGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6bTAtMTBjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
-        </div>
-        
-        <div className="relative h-full flex items-center justify-center text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 key={`title-${currentBanner}`} className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-extrabold tracking-tight mb-6 animate-fade-in ${banners[currentBanner].textColor} drop-shadow-2xl`}>
-              {banners[currentBanner].title}
-            </h1>
-            <p key={`desc-${currentBanner}`} className={`mt-6 max-w-3xl mx-auto text-xl sm:text-2xl lg:text-3xl font-sans leading-relaxed animate-fade-in ${banners[currentBanner].textColor} drop-shadow-lg`} style={{animationDelay: '0.2s'}}>
-              {banners[currentBanner].description}
+      <section className="relative isolate min-h-[620px] overflow-hidden bg-[#28211f] sm:min-h-[690px] lg:min-h-[min(760px,calc(100vh-110px))]">
+        <Image
+          src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=2200&q=90"
+          alt="Fashion editorial campaign featuring contemporary styling"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#171211]/80 via-[#171211]/45 to-[#171211]/10" />
+        <div className="relative mx-auto flex min-h-[620px] max-w-[1440px] items-center px-6 py-20 sm:min-h-[690px] sm:px-10 lg:min-h-[min(760px,calc(100vh-110px))] lg:px-16">
+          <div className="max-w-2xl text-white">
+            <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.28em] text-white/75 sm:text-xs">
+              The new RYSE edit
             </p>
-            <div key={`buttons-${currentBanner}`} className="mt-12 flex flex-col sm:flex-row gap-6 justify-center animate-fade-in" style={{animationDelay: '0.4s'}}>
-              <Link
-                href="/products"
-                className={`inline-block px-10 py-5 rounded-xl text-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl active:scale-95 ${banners[currentBanner].buttonPrimaryBg}`}
-              >
-                {banners[currentBanner].buttonPrimary}
+            <h1 className="max-w-xl font-display text-5xl font-semibold leading-[0.98] tracking-[-0.065em] sm:text-6xl lg:text-8xl">
+              Style that speaks <span className="font-normal italic text-[#e7c7c9]">for you.</span>
+            </h1>
+            <p className="mt-7 max-w-md text-sm leading-7 text-white/80 sm:text-base">
+              Discover versatile pieces, thoughtful details and fresh ways to make every look your own.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href="/products" className="inline-flex min-h-12 items-center justify-center bg-white px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-[#211b1a] transition-colors hover:bg-[#ead9d9]">
+                Shop the collection <span className="ml-3 text-base" aria-hidden="true">↗</span>
               </Link>
-              <Link
-                href="/about"
-                className={`inline-block px-10 py-5 rounded-xl text-xl font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${banners[currentBanner].buttonSecondaryBg}`}
-              >
-                {banners[currentBanner].buttonSecondary}
+              <Link href="/about" className="inline-flex min-h-12 items-center justify-center border border-white/65 px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-white hover:text-[#211b1a]">
+                Discover RYSE
               </Link>
-            </div>
-            
-            <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-3">
-              {banners.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentBanner(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                    index === currentBanner 
-                      ? 'bg-white w-8' 
-                      : 'bg-white/50 hover:bg-white/75'
-                  }`}
-                  aria-label={`Go to banner ${index + 1}`}
-                />
-              ))}
-            </div>
-            
-            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
             </div>
           </div>
+          <p className="absolute bottom-8 right-8 hidden text-[9px] font-semibold uppercase tracking-[0.2em] text-white/65 lg:block">
+            RYSE WEARS — EST. 2025
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
+      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+        <div className="mb-9 flex items-end justify-between gap-5">
           <div>
-            <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white animate-fade-in">Featured Collection</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">Discover our handpicked selection of premium Western wear</p>
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Find your direction</p>
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.055em] sm:text-4xl">Shop by collection</h2>
           </div>
-          <Link 
-            href="/products"
-            className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors duration-300"
-          >
-            View All →
+          <Link href="/products" className="hidden border-b border-[var(--accent)] pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent)] transition-opacity hover:opacity-70 sm:inline-flex">
+            View everything <span className="ml-2" aria-hidden="true">↗</span>
           </Link>
         </div>
-        
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden animate-pulse">
-                <div className="h-64 bg-gray-300 dark:bg-slate-700"></div>
-                <div className="p-4">
-                  <div className="h-4 bg-gray-300 dark:bg-slate-700 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-300 dark:bg-slate-700 rounded w-2/3"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product, index) => (
-              <div key={product.id} className="animate-scale-in" style={{animationDelay: `${index * 0.1}s`}}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
 
-      <div className="bg-white dark:bg-slate-800 py-16 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center group animate-fade-in" style={{animationDelay: '0.2s'}}>
-              <div className="flex justify-center mb-4">
-                <div className="p-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                  <svg className="h-12 w-12 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((category, index) => (
+            <Link key={category.label} href={category.href} className="group relative min-h-[390px] overflow-hidden bg-[#e9e3de] sm:min-h-[470px]">
+              <Image
+                src={category.image}
+                alt={\`\${category.label} fashion collection\`}
+                fill
+                unoptimized
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                style={{ objectPosition: category.position }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/70">0{index + 1} / RYSE EDIT</span>
+                <h3 className="mt-2 font-display text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">{category.label}</h3>
+                <p className="mt-2 text-xs text-white/80">{category.detail}</p>
+                <span className="mt-5 inline-flex items-center gap-3 border-b border-white/70 pb-1 text-[9px] font-bold uppercase tracking-[0.16em]">
+                  Explore collection <span className="text-sm transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+                </span>
               </div>
-              <h3 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">Premium Quality</h3>
-              <p className="text-gray-600 dark:text-gray-300 font-sans">All products are crafted with the finest materials</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-[#f0ece7] py-16 dark:bg-[#211e1c] sm:py-20">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+          <div className="mb-9 flex items-end justify-between gap-5">
+            <div>
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Selected for you</p>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.055em] sm:text-4xl">Featured pieces</h2>
+              <p className="mt-2 text-sm text-[var(--muted)]">A closer look at the collection.</p>
             </div>
-            <div className="text-center group animate-fade-in" style={{animationDelay: '0.4s'}}>
-              <div className="flex justify-center mb-4">
-                <div className="p-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                  <svg className="h-12 w-12 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+            <Link href="/products" className="hidden border-b border-[var(--accent)] pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent)] sm:inline-flex">
+              Shop all <span className="ml-2" aria-hidden="true">↗</span>
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index}>
+                  <div className="shimmer aspect-[4/5] w-full" />
+                  <div className="mt-4 h-3 w-2/3 animate-pulse bg-black/10 dark:bg-white/10" />
+                  <div className="mt-3 h-3 w-1/3 animate-pulse bg-black/10 dark:bg-white/10" />
                 </div>
-              </div>
-              <h3 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">Free Shipping</h3>
-              <p className="text-gray-600 dark:text-gray-300 font-sans">On orders over ₹2000 across India</p>
+              ))}
             </div>
-            <div className="text-center group animate-fade-in" style={{animationDelay: '0.6s'}}>
-              <div className="flex justify-center mb-4">
-                <div className="p-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                  <svg className="h-12 w-12 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">Easy Returns</h3>
-              <p className="text-gray-600 dark:text-gray-300 font-sans">30-day return policy on all items</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-6 lg:grid-cols-4">
+              {featuredProducts.slice(0, 8).map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
             </div>
+          )}
+
+          {!loading && featuredProducts.length === 0 && (
+            <div className="border border-[var(--border)] bg-[var(--surface)] px-6 py-12 text-center">
+              <p className="text-sm text-[var(--muted)]">Our collection is being updated. Please check back soon.</p>
+              <Link href="/products" className="mt-4 inline-flex text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent)]">Browse the shop</Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-[#762f3d] text-white">
+        <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[1fr_1fr]">
+          <div className="flex flex-col justify-center px-6 py-16 sm:px-10 sm:py-24 lg:px-16">
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/65">A point of view</p>
+            <h2 className="max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.06em] sm:text-5xl lg:text-6xl">
+              Less noise. <span className="font-normal italic text-[#e9cdd0]">More you.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-7 text-white/75">
+              Personal style is never one-size-fits-all. Explore pieces that work together, move with you and make getting dressed feel effortless.
+            </p>
+            <Link href="/products" className="mt-8 inline-flex min-h-12 w-fit items-center border border-white/70 px-7 text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-white hover:text-[#762f3d]">
+              Find your next look <span className="ml-3 text-base" aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <div className="relative min-h-[360px] lg:min-h-[560px]">
+            <Image
+              src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1400&q=90"
+              alt="Contemporary fashion editorial look"
+              fill
+              unoptimized
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="bg-gray-50 dark:bg-slate-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">Experience RYSE Wears</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Watch our latest collection showcase and discover the fashion that defines you</p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
-              <video 
-                className="w-full h-full object-cover" 
-                style={{ minHeight: '400px' }}
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-              >
-                <source src="/videos/RYSE_Wears_Brand_Showcase_Ad.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
-                <div className="p-8 w-full">
-                  <h3 className="text-white text-2xl font-bold mb-2">Spring/Summer Collection 2024</h3>
-                  <p className="text-white/90 mb-4">Explore the latest trends in Western fashion</p>
-                  <Link href="/products" className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
-                    Shop Collection
-                  </Link>
-                </div>
+      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
+        <div className="grid gap-8 border-y border-[var(--border)] py-9 sm:grid-cols-3 sm:gap-10">
+          {[
+            { number: '01', title: 'Thoughtful style', text: 'Explore versatile pieces for different moods and moments.' },
+            { number: '02', title: 'Your point of view', text: 'Build a wardrobe that reflects the way you want to show up.' },
+            { number: '03', title: 'A simpler edit', text: 'Find inspiration and discover your next favourite look.' },
+          ].map((item) => (
+            <div key={item.number} className="flex gap-4">
+              <span className="pt-1 text-[10px] font-bold tracking-[0.15em] text-[var(--accent)]">{item.number}</span>
+              <div>
+                <h3 className="font-display text-lg font-semibold tracking-[-0.03em]">{item.title}</h3>
+                <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--muted)]">{item.text}</p>
               </div>
             </div>
-
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
-              <video 
-                className="w-full h-full object-cover" 
-                style={{ minHeight: '400px' }}
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-              >
-                <source src="/videos/RYSE_Clothing_Ad_Generation.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
-                <div className="p-8 w-full">
-                  <h3 className="text-white text-2xl font-bold mb-2">Sustainable Fashion</h3>
-                  <p className="text-white/90 mb-4">Quality craftsmanship meets eco-friendly materials</p>
-                  <Link href="/about" className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
-                    Learn More
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
-
-      <div className="bg-gradient-to-b from-gray-50 to-white dark:from-slate-900 dark:to-slate-800 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-display font-bold text-gray-900 dark:text-white mb-4">Virtual Fashion Models</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Experience our latest collection on AI-generated 3D models. Rotate, zoom, and explore every detail.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
-              <div className="p-6 bg-gradient-to-r from-blue-500 to-indigo-600">
-                <h3 className="text-2xl font-bold text-white mb-2">Men&apos;s Collection</h3>
-                <p className="text-white/90">Premium Western Fashion</p>
-              </div>
-              <div className="relative" style={{ height: '500px' }}>
-                <img
-                  src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=80"
-                  alt="Male Fashion Model - Men's Western Wear"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
-                  <div className="p-6 w-full">
-                    <h4 className="text-white text-xl font-bold mb-2">Latest Men&apos;s Styles</h4>
-                    <p className="text-white/90 mb-4">Denim Jackets • Blazers • Chinos • Polo Shirts • Sneakers</p>
-                    <Link href="/products?gender=Men" className="inline-block bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                      Shop Men&apos;s Collection
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex gap-4">
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">50+</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Styles</p>
-                  </div>
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">New</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Arrivals</p>
-                  </div>
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">30%</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Off Sale</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
-              <div className="p-6 bg-gradient-to-r from-pink-500 to-purple-600">
-                <h3 className="text-2xl font-bold text-white mb-2">Women&apos;s Collection</h3>
-                <p className="text-white/90">Elegant Western Fashion</p>
-              </div>
-              <div className="relative" style={{ height: '500px' }}>
-                <img
-                  src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
-                  alt="Female Fashion Model - Women's Western Wear"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
-                  <div className="p-6 w-full">
-                    <h4 className="text-white text-xl font-bold mb-2">Latest Women&apos;s Styles</h4>
-                    <p className="text-white/90 mb-4">Maxi Dresses • Tops • Skinny Jeans • Cocktail Dresses</p>
-                    <Link href="/products?gender=Women" className="inline-block bg-white text-pink-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                      Shop Women&apos;s Collection
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex gap-4">
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">60+</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Styles</p>
-                  </div>
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">Hot</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Trends</p>
-                  </div>
-                  <div className="flex-1 text-center p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">40%</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Off Sale</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
-              <div className="w-12 h-12 mx-auto mb-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Realistic Preview</h3>
-              <p className="text-gray-600 dark:text-gray-400">See how clothes fit and look from every angle</p>
-            </div>
-            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
-              <div className="w-12 h-12 mx-auto mb-4 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Style Matching</h3>
-              <p className="text-gray-600 dark:text-gray-400">AI-powered recommendations for your body type</p>
-            </div>
-            <div className="text-center p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
-              <div className="w-12 h-12 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Quick Updates</h3>
-              <p className="text-gray-600 dark:text-gray-400">New styles added weekly to our collection</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
 
       <Footer />
-    </div>
+    </main>
   );
 }
