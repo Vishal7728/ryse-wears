@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 
 const navigation = [
   { label: 'Shop all', href: '/products' },
+  { label: 'Search', href: '/products?search=' },
   { label: 'Men', href: '/products?gender=Men' },
   { label: 'Women', href: '/products?gender=Women' },
   { label: 'Our story', href: '/about' },
@@ -36,8 +37,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]/95 text-[var(--foreground)] shadow-[0_4px_24px_rgba(35,25,22,0.04)] backdrop-blur-xl">
       <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
         <Link href="/" onClick={closeMenu} className="group flex items-center gap-3" aria-label="RYSE Wears home">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] font-display text-lg font-bold tracking-tight text-white transition-transform group-hover:rotate-[-6deg]">
-            R
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-white transition-transform duration-300 group-hover:rotate-[-6deg]">
+            <svg viewBox="0 0 64 64" className="h-7 w-7" aria-hidden="true"><path d="M19 46V17h14c8 0 13 4 13 11 0 5-3 9-8 10l9 8H35l-8-8h-1v8zm7-14h7c4 0 6-1 6-4s-2-4-6-4h-7z" fill="currentColor"/></svg>
           </span>
           <span className="flex flex-col leading-none">
             <span className="font-display text-[19px] font-extrabold tracking-[-0.06em]">RYSE WEARS</span>
@@ -50,9 +51,9 @@ export default function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--foreground)]/75 transition-colors hover:text-[var(--accent)]"
+              className="group relative text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--foreground)]/75 transition-colors duration-200 hover:text-[var(--accent)] focus-visible:text-[var(--accent)]"
             >
-              {item.label}
+              {item.label}<span className="absolute -bottom-2 left-0 h-px w-0 bg-[var(--accent)] transition-all duration-200 group-hover:w-full group-focus-visible:w-full" />
             </Link>
           ))}
         </nav>
@@ -60,9 +61,9 @@ export default function Header() {
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/contact"
-            className="hidden px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--foreground)]/75 transition-colors hover:text-[var(--accent)] lg:inline-flex"
+            className="group relative hidden px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--foreground)]/75 transition-colors hover:text-[var(--accent)] lg:inline-flex"
           >
-            Contact
+            Contact<span className="absolute bottom-0 left-3 h-px w-0 bg-[var(--accent)] transition-all group-hover:w-[calc(100%-24px)]" />
           </Link>
           <Link
             href="/login"
