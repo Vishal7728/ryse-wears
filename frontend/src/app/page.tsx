@@ -32,21 +32,21 @@ const categories = [
     label: 'Men',
     detail: 'Everyday essentials and considered layers',
     href: '/products?gender=Men',
-    image: '/images/products/male/graphic-tee.jpg',
-    position: 'center 28%',
+    image: '/images/men-collection.jpg',
+    position: 'center 22%',
   },
   {
     label: 'Women',
     detail: 'Modern silhouettes, made to move',
     href: '/products?gender=Women',
-    image: '/images/products/female/floral-dress.jpg',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=85',
     position: 'center 30%',
   },
   {
     label: 'Explore all',
     detail: 'Find your next favourite piece',
     href: '/products',
-    image: '/images/products/male/blazer.jpg',
+    image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=900&q=85',
     position: 'center',
   },
 ];
@@ -135,8 +135,8 @@ export default function Home() {
           alt="Fashion editorial campaign featuring contemporary styling"
           fill
           priority
+          unoptimized
           sizes="100vw"
-          quality={78}
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#171211]/80 via-[#171211]/45 to-[#171211]/10" />
@@ -152,10 +152,19 @@ export default function Home() {
               Discover versatile pieces, thoughtful details and fresh ways to make every look your own.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/products" className="inline-flex min-h-12 items-center justify-center bg-white px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-[#211b1a] transition-colors hover:bg-[#ead9d9]">
-                Shop the collection <span className="ml-3 text-base" aria-hidden="true">↗</span>
+              <Link
+                href="/products"
+                className="inline-flex min-h-12 items-center justify-center border border-[#762f3d] bg-[#762f3d] px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:border-white/75 hover:bg-transparent hover:text-white"
+              >
+                <span>Shop the collection</span>
+                <svg className="ml-3 h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 11.5L11.5 4.5M6 4.5h5.5V10" />
+                </svg>
               </Link>
-              <Link href="/about" className="inline-flex min-h-12 items-center justify-center border border-white/65 px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-white hover:text-[#211b1a]">
+              <Link
+                href="/about"
+                className="inline-flex min-h-12 items-center justify-center border border-white/75 bg-transparent px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:border-[#762f3d] hover:bg-[#762f3d] hover:text-white"
+              >
                 Discover RYSE
               </Link>
             </div>
@@ -184,8 +193,8 @@ export default function Home() {
                 src={category.image}
                 alt={`${category.label} fashion collection`}
                 fill
+                unoptimized
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                quality={75}
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 style={{ objectPosition: category.position }}
               />
@@ -262,8 +271,8 @@ export default function Home() {
               src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1400&q=90"
               alt="Contemporary fashion editorial look"
               fill
+              unoptimized
               sizes="(max-width: 1024px) 100vw, 50vw"
-              quality={75}
               className="object-cover"
             />
           </div>
