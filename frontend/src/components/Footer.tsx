@@ -18,7 +18,7 @@ const footerLinks = [
       { label: 'My account', href: '/login' },
       { label: 'Shopping bag', href: '/cart' },
       { label: 'Contact us', href: '/contact' },
-      { label: 'FAQ', href: '/faq' },
+      { label: 'Our story', href: '/about' },
     ],
   },
 ];
@@ -33,9 +33,7 @@ export default function Footer() {
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8b3b4b] text-lg font-extrabold text-white">R</span>
               <span className="font-display text-xl font-extrabold tracking-[-0.06em]">RYSE WEARS</span>
             </Link>
-            <p className="mt-5 max-w-xs text-sm leading-7 text-white/60">
-              Considered pieces. Confident style. Discover clothing that feels like you.
-            </p>
+            <p className="mt-5 max-w-xs text-sm leading-7 text-white/60">Considered pieces. Confident style. Discover clothing that feels like you.</p>
           </div>
 
           {footerLinks.map((group) => (
@@ -44,8 +42,9 @@ export default function Footer() {
               <ul className="mt-5 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.href + link.label}>
-                    <Link href={link.href} className="text-sm text-white/75 transition-colors hover:text-white">
-                      {link.label}
+                    <Link href={link.href} className="group inline-flex items-center gap-2 text-sm text-white/70 transition-colors duration-200 hover:text-white focus-visible:text-white">
+                      <span className="relative">{link.label}<span className="absolute -bottom-1 left-0 h-px w-0 bg-[#d6a0a8] transition-all duration-200 group-hover:w-full group-focus-visible:w-full" /></span>
+                      <span className="translate-x-[-3px] text-[#d6a0a8] opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" aria-hidden="true">↗</span>
                     </Link>
                   </li>
                 ))}
@@ -55,15 +54,8 @@ export default function Footer() {
 
           <div>
             <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/45">Stay in the loop</h2>
-            <p className="mt-5 text-sm leading-6 text-white/65">
-              Get collection updates and news from RYSE Wears.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-5 inline-flex items-center gap-2 border-b border-[#c78b95] pb-2 text-xs font-bold uppercase tracking-[0.14em] text-white transition-colors hover:text-[#e6b6be]"
-            >
-              Get in touch <span aria-hidden="true">↗</span>
-            </Link>
+            <p className="mt-5 text-sm leading-6 text-white/65">Get collection updates and news from RYSE Wears.</p>
+            <Link href="/contact" className="mt-5 inline-flex items-center gap-2 border-b border-[#c78b95] pb-2 text-xs font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-white hover:text-[#e6b6be]">Get in touch <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
 
