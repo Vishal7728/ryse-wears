@@ -63,7 +63,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    addItem({
+    const cartProduct = {
       id: product._id,
       _id: product._id,
       name: product.name,
@@ -71,7 +71,8 @@ export default function ProductDetailPage() {
       description: product.description,
       image: product.image,
       category: product.subcategory || product.category,
-    });
+    };
+    for (let index = 0; index < quantity; index += 1) addItem(cartProduct);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 2200);
   };
