@@ -1,37 +1,86 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --background: #f7f5f2;
+  --surface: #ffffff;
+  --foreground: #211d1b;
+  --muted: #77716d;
+  --border: #e7e1dc;
+  --accent: #762f3d;
+  --accent-strong: #5d2330;
+  --accent-soft: #f3e8e9;
   --font-lato: 'Lato', sans-serif;
   --font-montserrat: 'Montserrat', sans-serif;
 }
 
 :root.dark {
-  --background: #0a0e1a;
-  --foreground: #f1f5f9;
+  color-scheme: dark;
+  --background: #171514;
+  --surface: #211e1c;
+  --foreground: #f5f1ed;
+  --muted: #b5aaa3;
+  --border: #39322f;
+  --accent: #b86a78;
+  --accent-strong: #d18b96;
+  --accent-soft: #38272b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-lato), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-lato), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 650;
+  letter-spacing: -0.035em;
 }
 
-/* Simplified dark mode background */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img, video {
+  max-width: 100%;
+}
+
+::selection {
+  color: #fff;
+  background: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .dark-pattern-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
@@ -44,19 +93,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark-bg {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  inset: 0;
+  background: linear-gradient(135deg, #171514 0%, #25201f 50%, #171514 100%);
   opacity: 0.9;
 }
 
-/* Ensure content stays above patterns */
 .relative.z-10 {
   position: relative;
   z-index: 10;
 }
 
-/* Line clamp utility */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -64,197 +110,55 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 .animate-fade-in {
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.45s ease both;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.3s ease forwards;
+  animation: scaleIn 0.35s ease both;
 }
 
-/* Hover effects - simplified for better performance */
-.hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* Enhanced button hover effects */
-button, .btn {
-  transition: all 0.2s ease;
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-button:hover, .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-button:active, .btn:active {
-  transform: translateY(0);
-}
-
-/* Card hover effects */
-.card-hover {
-  transition: all 0.2s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-/* Loading shimmer effect */
 .shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #eee9e5 25%, #e2dcd7 50%, #eee9e5 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+.hover-lift,
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Smooth page transitions */
+.hover-lift:hover,
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 35px -20px rgb(35 25 22 / 30%);
+}
+
 .page-transition {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.35s ease;
 }
 
-/* Mobile optimization - reduce animations and effects */
-@media (max-width: 768px) {
-  /* Reduce transition durations for better performance */
-  * {
-    transition-duration: 0.1s !important;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  
-  /* Simplify hover effects on mobile */
-  .hover-lift:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-  }
-  
-  /* Disable complex animations on mobile */
-  .animate-fade-in,
-  .animate-scale-in {
-    animation-duration: 0.15s !important;
-  }
-  
-  /* Simplify card hover effects */
-  .card-hover:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-  }
-  
-  /* Reduce button hover effects */
-  button:hover, .btn:hover {
-    transform: translateY(-0.5px) !important;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05) !important;
-  }
-}
-
-/* Further optimization for low-end devices */
-@media (max-width: 480px) {
-  /* Disable all non-essential animations */
-  * {
-    animation-duration: 0s !important;
-    transition-duration: 0s !important;
-  }
-  
-  /* Remove all hover effects on very small screens */
-  .hover-lift:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-  
-  button:hover, .btn:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-  
-  .card-hover:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-  
-  /* Simplify loading skeletons */
-  .animate-pulse {
-    animation: none !important;
-  }
-}
-
-/* High-performance image loading */
-img {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 1px;
-}
-
-/* Optimize scroll performance */
-html {
-  scroll-behavior: auto; /* Disable smooth scroll on mobile for better performance */
-}
-
-@media (min-width: 769px) {
-  html {
-    scroll-behavior: smooth; /* Enable smooth scroll only on desktop */
-  }
-}
-
-/* Reduce layout shifts */
-img, video {
-  aspect-ratio: attr(width) / attr(height);
-}
-
-/* Optimize font loading */
-@font-face {
-  font-family: 'Lato';
-  font-display: swap; /* Ensure text remains visible during font load */
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  font-display: swap; /* Ensure text remains visible during font load */
-}
-
-/* Lazy loading for background images */
-.lazy-bg {
-  background-image: none !important;
-}
-
-.lazy-bg-loaded {
-  transition: background-image 0.2s ease;
 }
