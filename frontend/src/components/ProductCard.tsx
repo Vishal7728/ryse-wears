@@ -19,7 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group">
       <div className="relative overflow-hidden bg-[#eeeae6] dark:bg-[#302927]">
-        <Link href={\`/products/\${product.id}\`} className="block" aria-label={\`View \${product.name}\`}>
+        <Link href={`/products/${product.id}`} className="block" aria-label={`View ${product.name}`}>
           <div className="relative w-full" style={{ paddingTop: '128%' }}>
             <Image
               src={product.image}
@@ -39,14 +39,14 @@ export default function ProductCard({ product }: { product: Product }) {
           type="button"
           onClick={() => addItem(product)}
           className="absolute bottom-3 left-3 right-3 translate-y-2 bg-white px-3 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#211b1a] opacity-0 transition-all duration-300 hover:bg-[#762f3d] hover:text-white group-hover:translate-y-0 group-hover:opacity-100 focus:translate-y-0 focus:opacity-100"
-          aria-label={\`Add \${product.name} to shopping bag\`}
+          aria-label={`Add ${product.name} to shopping bag`}
         >
           Add to bag
         </button>
       </div>
       <div className="flex items-start justify-between gap-3 pt-3">
         <div className="min-w-0">
-          <Link href={\`/products/\${product.id}\`} className="block">
+          <Link href={`/products/${product.id}`} className="block">
             <h3 className="line-clamp-2 text-sm font-semibold tracking-[-0.02em] text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
               {product.name}
             </h3>
