@@ -60,7 +60,7 @@ export default function Home() {
 
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await fetch(\`\${API_URL}/api/products?limit=8\`, { signal: controller.signal });
+        const response = await fetch(`${API_URL}/api/products?limit=8`, { signal: controller.signal });
         if (!response.ok) throw new Error('Unable to load featured products');
 
         const data = await response.json();
@@ -182,7 +182,7 @@ export default function Home() {
             <Link key={category.label} href={category.href} className="group relative min-h-[390px] overflow-hidden bg-[#e9e3de] sm:min-h-[470px]">
               <Image
                 src={category.image}
-                alt={\`\${category.label} fashion collection\`}
+                alt={`${category.label} fashion collection`}
                 fill
                 unoptimized
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
