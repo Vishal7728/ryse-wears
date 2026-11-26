@@ -135,8 +135,8 @@ export default function Home() {
           alt="Fashion editorial campaign featuring contemporary styling"
           fill
           priority
-          unoptimized
           sizes="100vw"
+          quality={78}
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#171211]/80 via-[#171211]/45 to-[#171211]/10" />
@@ -184,8 +184,8 @@ export default function Home() {
                 src={category.image}
                 alt={`${category.label} fashion collection`}
                 fill
-                unoptimized
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                quality={75}
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 style={{ objectPosition: category.position }}
               />
@@ -262,8 +262,8 @@ export default function Home() {
               src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1400&q=90"
               alt="Contemporary fashion editorial look"
               fill
-              unoptimized
               sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={75}
               className="object-cover"
             />
           </div>
