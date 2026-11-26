@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={\`\${lato.variable} \${montserrat.variable} antialiased\`}>
+      <body className={lato.variable + " " + montserrat.variable + " antialiased"}>
         <Script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" strategy="lazyOnload" />
         <DarkModeProvider>
           <CartProvider>
