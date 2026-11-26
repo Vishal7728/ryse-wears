@@ -1,189 +1,79 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Image from 'next/image';
+
+const principles = [
+  { number: '01', title: 'Thoughtful materials', text: 'We look for fabrics and finishes that feel considered, comfortable and made to be worn often.' },
+  { number: '02', title: 'Everyday versatility', text: 'Pieces should work across plans, seasons and personal styles — not just for one moment.' },
+  { number: '03', title: 'A lasting point of view', text: 'We favour confident, wearable design over noise and passing trends.' },
+];
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Header />
-      
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">About RYSE Wears</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Elevating fashion since 2025 with sustainable, stylish clothing for the modern individual.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Story</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Founded in 2025, RYSE Wears began with a simple mission: to create fashion that empowers individuals 
-              to express their unique style while making responsible choices for our planet.
-            </p>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              What started as a small boutique has grown into a global movement of conscious consumers who believe 
-              that looking good and doing good can go hand in hand.
-            </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              Today, we continue to push boundaries in sustainable fashion, working with ethical suppliers and 
-              innovative materials to create pieces that stand the test of time.
-            </p>
-          </div>
-          <div className="relative rounded-xl overflow-hidden shadow-2xl h-96">
-            <Image
-              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
-              alt="RYSE Wears Fashion Store Interior"
-              fill
-              className="object-cover"
-              unoptimized
-            />
+      <section className="relative isolate overflow-hidden bg-[#251d1d] text-white">
+        <Image src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=2200&q=90" alt="Fashion studio and clothing rails" fill unoptimized priority sizes="100vw" className="object-cover opacity-45" />
+        <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] items-end px-6 pb-14 pt-24 sm:px-10 lg:min-h-[560px] lg:px-16 lg:pb-20">
+          <div className="max-w-3xl">
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/70">The RYSE point of view</p>
+            <h1 className="font-display text-5xl font-semibold leading-[0.98] tracking-[-0.06em] sm:text-6xl lg:text-8xl">Wear what<br /><span className="font-normal italic text-[#e4bdc3]">moves you.</span></h1>
+            <p className="mt-7 max-w-xl text-sm leading-7 text-white/80 sm:text-base">RYSE Wears is built around personal expression, versatile pieces and the confidence to make a look your own.</p>
           </div>
         </div>
-        
-        {/* Company Team Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Behind the Brand</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="relative rounded-xl overflow-hidden shadow-xl h-80">
-              <Image
-                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80"
-                alt="RYSE Wears Design Team at Work"
-                fill
-                className="object-cover"
-                unoptimized
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                <h3 className="text-white text-xl font-bold">Our Design Studio</h3>
-                <p className="text-white/90 text-sm">Where creativity meets sustainability</p>
-              </div>
-            </div>
-            <div className="relative rounded-xl overflow-hidden shadow-xl h-80">
-              <Image
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80"
-                alt="RYSE Wears Team Collaboration"
-                fill
-                className="object-cover"
-                unoptimized
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                <h3 className="text-white text-xl font-bold">Our Team</h3>
-                <p className="text-white/90 text-sm">Passionate about fashion and sustainability</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      </section>
 
-        {/* Manufacturing Process Video Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Manufacturing Process</h2>
-          <p className="text-center text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-            Witness the craftsmanship and dedication that goes into every piece. From sustainable sourcing to ethical production.
-          </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Video 1 - Production Process */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <video 
-                className="w-full h-full object-cover" 
-                style={{ minHeight: '350px' }}
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-              >
-                <source src="/videos/Factory_Tour_Video_Clothing_Production.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                <h3 className="text-white text-xl font-bold mb-2">Precision Craftsmanship</h3>
-                <p className="text-white/90">Each garment is carefully crafted by skilled artisans</p>
-              </div>
-            </div>
+      <section className="mx-auto grid max-w-[1440px] gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-12">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Our story</p>
+          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-0.055em] sm:text-5xl">Style should feel like <span className="font-normal italic text-[var(--accent)]">your own.</span></h2>
+        </div>
+        <div className="space-y-5 text-sm leading-8 text-[var(--muted)] sm:text-base">
+          <p>Founded in 2025, RYSE Wears began with a simple idea: clothing should help people express their individuality and feel comfortable in their own style.</p>
+          <p>Our approach brings together contemporary silhouettes, wearable essentials and details that make an outfit feel considered. We want getting dressed to feel less complicated and more personal.</p>
+          <p>We continue to explore responsible material choices and thoughtful production as we grow. Our focus is on building a collection people can return to, style in different ways and make their own.</p>
+          <Link href="/products" className="mt-3 inline-flex items-center gap-3 border-b border-[var(--accent)] pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--accent)] transition-colors hover:border-[var(--accent-strong)] hover:text-[var(--accent-strong)]">Explore the collection <span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
 
-            {/* Image - Sustainable Materials */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="/sustainable-materials.png"
-                alt="Sustainable Eco-Friendly Fabrics"
-                className="w-full h-full object-cover"
-                style={{ minHeight: '350px' }}
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                <h3 className="text-white text-xl font-bold mb-2">Sustainable Materials</h3>
-                <p className="text-white/90">Eco-friendly fabrics sourced from ethical suppliers</p>
-              </div>
-            </div>
+      <section className="bg-[#f0ece7] dark:bg-[#211e1c]">
+        <div className="mx-auto grid max-w-[1440px] lg:grid-cols-2">
+          <div className="relative min-h-[360px] lg:min-h-[600px]">
+            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1400&q=90" alt="Creative team working together" fill unoptimized sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          </div>
+          <div className="flex flex-col justify-center px-6 py-16 sm:px-12 lg:px-16">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Behind the label</p>
+            <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">Made for real life.</h2>
+            <p className="mt-6 max-w-lg text-sm leading-7 text-[var(--muted)]">From the first outfit idea to the final details, we think about how clothing fits into everyday routines. The result is a growing edit of pieces designed to be mixed, matched and worn your way.</p>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="text-center group">
-            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
-              <Image
-                src="https://images.unsplash.com/photo-1558769132-cb1aea3c8b37?w=200&q=80"
-                alt="Sustainable Materials"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Sustainable Materials</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              We source eco-friendly fabrics and materials to minimize our environmental impact.
-            </p>
-          </div>
-          <div className="text-center group">
-            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
-              <Image
-                src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=200&q=80"
-                alt="Ethical Production"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Ethical Production</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              All our products are made in facilities that ensure fair wages and safe working conditions.
-            </p>
-          </div>
-          <div className="text-center group">
-            <div className="relative w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
-              <Image
-                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=200&q=80"
-                alt="Timeless Design"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Timeless Design</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Our pieces are designed to last, reducing the need for frequent replacements.
-            </p>
-          </div>
+      </section>
+
+      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24 lg:px-12">
+        <div className="mb-10 max-w-xl">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">What guides us</p>
+          <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">The RYSE essentials.</h2>
         </div>
-        
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Join Our Movement</h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-            Be part of a community that values both style and sustainability. Subscribe to our newsletter 
-            for exclusive offers, style tips, and updates on our sustainability initiatives.
-          </p>
-          <div className="max-w-md mx-auto flex">
-            <input 
-              type="email" 
-              placeholder="Your email address" 
-              className="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-            />
-            <button className="bg-black text-white px-6 py-2 rounded-r-lg hover:bg-gray-800 transition-colors">
-              Subscribe
-            </button>
-          </div>
+        <div className="grid gap-8 border-y border-[var(--border)] py-9 md:grid-cols-3 md:gap-10">
+          {principles.map((item) => (
+            <article key={item.number}>
+              <span className="text-[10px] font-bold tracking-[0.16em] text-[var(--accent)]">{item.number}</span>
+              <h3 className="mt-5 font-display text-xl font-semibold tracking-[-0.035em]">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{item.text}</p>
+            </article>
+          ))}
         </div>
-      </div>
-      
+      </section>
+
+      <section className="bg-[#762f3d] px-5 py-16 text-center text-white sm:py-20">
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/65">Find your next favourite</p>
+        <h2 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">Make the everyday yours.</h2>
+        <Link href="/products" className="mt-8 inline-flex min-h-12 items-center justify-center border border-white/75 px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-white hover:text-[#762f3d]">Shop RYSE WEARS <span className="ml-3">↗</span></Link>
+      </section>
       <Footer />
-    </div>
+    </main>
   );
 }
