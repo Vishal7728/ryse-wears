@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import ProductCard from '../../components/ProductCard';
 import { API_URL } from '../../config/api';
 
@@ -45,82 +44,75 @@ const fallbackProducts: Product[] = [
 ];
 
 export default function ClientProductsPage() {
-  const searchParams = useSearchParams();
-  const initialGender = searchParams.get('gender') || 'All';
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedGender, setSelectedGender] = useState(initialGender);
-  const [searchInput, setSearchInput] = useState(searchParams.get('search') || '');
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [selectedGender, setSelectedGender] = useState('All');
+  const [searchInput, setSearchInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [sort, setSort] = useState('featured');
   const [apiUnavailable, setApiUnavailable] = useState(false);
 
   useEffect(() => {
-    const nextGender = searchParams.get('gender') || 'All';
-    const nextSearch = searchParams.get('search') || '';
-    setSelectedGender(nextGender);
-    setSearchInput(nextSearch);
-    setSearchQuery(nextSearch);
-  }, [searchParams]);
+    const params = new URLSearchParams(window.location.search);
+    setSelectedGender(params.get('gender') || 'All');
+    const initialSearch = params.get('search') || '';
+    setSearchInput(initialSearch);
+    setSearchQuery(initialSearch);
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setSearchQuery(searchInput.trim()), 250);
     return () => window.clearTimeout(timer);
   }, [searchInput]);
 
-  const fetchProducts = useCallback(async () => {
+  const fetchProducts = useCallback(() => {
     const controller = new AbortController();
-    setLoading(true);
-    const params = new URLSearchParams({ limit: '100' });
-    if (selectedCategory !== 'All') params.set('subcategory', selectedCategory);
-    if (selectedGender !== 'All') params.set('gender', selectedGender);
-    if (searchQuery) params.set('search', searchQuery);
+    const load = async () => {
+      setLoading(true);
+      const params = new URLSearchParams({ limit: '100' });
+      if (selectedCategory !== 'All') params.set('subcategory', selectedCategory);
+      if (selectedGender !== 'All') params.set('gender', selectedGender);
+      if (searchQuery) params.set('search', searchQuery);
 
-    try {
-      const response = await fetch(\`\${API_URL}/api/products?\${params.toString()}\`, { signal: controller.signal });
-      if (!response.ok) throw new Error('Product service returned an error');
-      const data = await response.json();
-      const rows: ApiProduct[] = Array.isArray(data) ? data : Array.isArray(data.products) ? data.products : [];
-      const mapped = rows.map((item) => ({
-        id: item._id,
-        name: item.name,
-        price: Number(item.price),
-        description: item.description || '',
-        image: item.image,
-        category: item.subcategory || item.category || 'Collection',
-        subcategory: item.subcategory,
-        gender: item.gender,
-        sizes: item.sizes,
-        colors: item.colors,
-        stock: item.stock,
-      }));
-      setProducts(mapped);
-      setApiUnavailable(false);
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') return;
-      setApiUnavailable(true);
-      const query = searchQuery.toLowerCase();
-      setProducts(fallbackProducts.filter((item) =>
-        (selectedGender === 'All' || item.gender?.toLowerCase() === selectedGender.toLowerCase()) &&
-        (selectedCategory === 'All' || item.category?.toLowerCase() === selectedCategory.toLowerCase()) &&
-        (!query || \`\${item.name} \${item.description} \${item.category}\`.toLowerCase().includes(query))
-      ));
-    } finally {
-      if (!controller.signal.aborted) setLoading(false);
-    }
+      try {
+        const response = await fetch(\`\${API_URL}/api/products?\${params.toString()}\`, { signal: controller.signal });
+        if (!response.ok) throw new Error('Product service returned an error');
+        const data = await response.json();
+        const rows: ApiProduct[] = Array.isArray(data) ? data : Array.isArray(data.products) ? data.products : [];
+        const mapped = rows.map((item) => ({
+          id: item._id,
+          name: item.name,
+          price: Number(item.price),
+          description: item.description || '',
+          image: item.image,
+          category: item.subcategory || item.category || 'Collection',
+          subcategory: item.subcategory,
+          gender: item.gender,
+          sizes: item.sizes,
+          colors: item.colors,
+          stock: item.stock,
+        }));
+        setProducts(mapped);
+        setApiUnavailable(false);
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') return;
+        setApiUnavailable(true);
+        const query = searchQuery.toLowerCase();
+        setProducts(fallbackProducts.filter((item) =>
+          (selectedGender === 'All' || item.gender?.toLowerCase() === selectedGender.toLowerCase()) &&
+          (selectedCategory === 'All' || item.category?.toLowerCase() === selectedCategory.toLowerCase()) &&
+          (!query || \`\${item.name} \${item.description} \${item.category}\`.toLowerCase().includes(query))
+        ));
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    };
+    void load();
     return () => controller.abort();
   }, [selectedCategory, selectedGender, searchQuery]);
 
-  useEffect(() => {
-    let cancelled = false;
-    const run = async () => {
-      const cleanup = await fetchProducts();
-      if (cancelled && typeof cleanup === 'function') cleanup();
-    };
-    run();
-    return () => { cancelled = true; };
-  }, [fetchProducts]);
+  useEffect(() => fetchProducts(), [fetchProducts]);
 
   const visibleProducts = useMemo(() => {
     const sorted = [...products];
