@@ -1,4 +1,5 @@
 'use client';
+
 import { useCart } from '../context/CartContext';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,42 +17,51 @@ export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
 
   return (
-    <div className="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover-lift group dark:border dark:border-purple-500/20 relative transition-all duration-300">
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 opacity-0 dark:group-hover:opacity-30 transition-opacity duration-300 pointer-events-none"></div>
-      
-      <Link href={`/products/${product.id}`} className="block relative z-10">
-        <div className="relative bg-gray-200 dark:bg-slate-700/50 overflow-hidden">
-          <div className="relative w-full" style={{ paddingTop: '125%' }}>
+    <article className="group">
+      <div className="relative overflow-hidden bg-[#eeeae6] dark:bg-[#302927]">
+        <Link href={\`/products/\${product.id}\`} className="block" aria-label={\`View \${product.name}\`}>
+          <div className="relative w-full" style={{ paddingTop: '128%' }}>
             <Image
               src={product.image}
               alt={product.name}
               fill
-              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
               unoptimized
               loading="lazy"
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-      </Link>
-      <div className="p-4 relative z-10">
-        <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide font-sans">
-          {product.category || 'General'}
-        </span>
-        <Link href={`/products/${product.id}`}>
-          <h3 className="text-lg font-display font-semibold text-gray-900 dark:text-white mt-1 line-clamp-2">{product.name}</h3>
         </Link>
-        <div className="mt-4 flex justify-between items-center">
-          <span className="text-xl font-bold text-gray-900 dark:text-white">₹{product.price.toFixed(2)}</span>
-          <button 
-            onClick={() => addItem(product)}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 dark:from-purple-500 dark:to-pink-500 dark:hover:from-purple-600 dark:hover:to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95"
-          >
-            Add to Cart
-          </button>
-        </div>
+        <span className="absolute left-3 top-3 bg-white/90 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#4c3938] backdrop-blur">
+          {product.category || 'Selected'}
+        </span>
+        <button
+          type="button"
+          onClick={() => addItem(product)}
+          className="absolute bottom-3 left-3 right-3 translate-y-2 bg-white px-3 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#211b1a] opacity-0 transition-all duration-300 hover:bg-[#762f3d] hover:text-white group-hover:translate-y-0 group-hover:opacity-100 focus:translate-y-0 focus:opacity-100"
+          aria-label={\`Add \${product.name} to shopping bag\`}
+        >
+          Add to bag
+        </button>
       </div>
-    </div>
+      <div className="flex items-start justify-between gap-3 pt-3">
+        <div className="min-w-0">
+          <Link href={\`/products/\${product.id}\`} className="block">
+            <h3 className="line-clamp-2 text-sm font-semibold tracking-[-0.02em] text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
+              {product.name}
+            </h3>
+          </Link>
+          <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">{product.category || 'RYSE collection'}</p>
+        </div>
+        <span className="shrink-0 pt-0.5 text-sm font-bold text-[var(--foreground)]">₹{Number(product.price).toLocaleString('en-IN')}</span>
+      </div>
+      <button
+        type="button"
+        onClick={() => addItem(product)}
+        className="mt-3 w-full border border-[var(--border)] py-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-white sm:hidden"
+      >
+        Add to bag
+      </button>
+    </article>
   );
 }
