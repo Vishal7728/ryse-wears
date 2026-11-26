@@ -1,132 +1,83 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 export default function ContactPage() {
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const name = String(form.get('name') || '');
+    const email = String(form.get('email') || '');
+    const subject = String(form.get('subject') || 'Website enquiry');
+    const message = String(form.get('message') || '');
+    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    window.location.href = 'mailto:support@rysewears.com?subject=' + encodeURIComponent(subject) + '&body=' + body;
+    setSent(true);
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Header />
-      
-      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            We&apos;d love to hear from you. Reach out to us through any of the channels below.
-          </p>
+      <section className="bg-[#762f3d] px-5 py-16 text-white sm:px-8 sm:py-24 lg:px-12">
+        <div className="mx-auto max-w-[1440px]">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/65">We’re here to help</p>
+          <h1 className="mt-4 max-w-3xl font-display text-5xl font-semibold leading-[1.02] tracking-[-0.06em] sm:text-6xl lg:text-7xl">Let’s start a <span className="font-normal italic text-[#e8c8cd]">conversation.</span></h1>
+          <p className="mt-6 max-w-xl text-sm leading-7 text-white/75 sm:text-base">Questions about an order, a product or RYSE WEARS? Send us a note and we’ll help point you in the right direction.</p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Get in Touch</h2>
-            
-            <div className="space-y-6">
-              <div className="flex items-start">
-                <div className="flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-full p-3 mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Phone</h3>
-                  <p className="text-gray-600 dark:text-gray-300">+91 7728994624</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-full p-3 mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-300">support@rysewears.com</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-full p-3 mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Office</h3>
-                  <p className="text-gray-600 dark:text-gray-300">123 Fashion Street<br />New York, NY 10001</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-full p-3 mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Business Hours</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Monday-Friday: 9AM - 6PM<br />Saturday: 10AM - 4PM<br />Sunday: Closed</p>
-                </div>
-              </div>
+      </section>
+
+      <section className="mx-auto grid max-w-[1440px] gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-12">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Contact details</p>
+          <h2 className="mt-4 font-display text-3xl font-semibold tracking-[-0.05em]">We’d love to hear from you.</h2>
+          <div className="mt-9 space-y-7">
+            <div className="border-b border-[var(--border)] pb-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Email</p>
+              <a href="mailto:support@rysewears.com" className="mt-2 inline-block text-lg font-semibold transition-colors hover:text-[var(--accent)]">support@rysewears.com</a>
+            </div>
+            <div className="border-b border-[var(--border)] pb-6">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Phone</p>
+              <a href="tel:+917728994624" className="mt-2 inline-block text-lg font-semibold transition-colors hover:text-[var(--accent)]">+91 7728994624</a>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">A quick note</p>
+              <p className="mt-2 max-w-sm text-sm leading-7 text-[var(--muted)]">For order-related questions, include your order number in the message so our team can identify the purchase.</p>
             </div>
           </div>
-          
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Send us a Message</h2>
-            <form className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  placeholder="Your name"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subject</label>
-                <input
-                  type="text"
-                  id="subject"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  placeholder="What is this regarding?"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  placeholder="Your message here..."
-                ></textarea>
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
         </div>
-      </div>
-      
+
+        <div className="bg-[var(--surface)] p-6 shadow-[0_20px_60px_rgba(35,25,22,0.07)] sm:p-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">Send a message</p>
+          <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.04em]">How can we help?</h2>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Your name</span>
+                <input name="name" required autoComplete="name" className="w-full border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--accent)]" placeholder="Name" />
+              </label>
+              <label className="block">
+                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Email address</span>
+                <input name="email" type="email" required autoComplete="email" className="w-full border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--accent)]" placeholder="you@example.com" />
+              </label>
+            </div>
+            <label className="block">
+              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Subject</span>
+              <input name="subject" required className="w-full border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--accent)]" placeholder="What can we help with?" />
+            </label>
+            <label className="block">
+              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--muted)]">Message</span>
+              <textarea name="message" required rows={5} className="w-full resize-y border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--accent)]" placeholder="Tell us a little more..." />
+            </label>
+            <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center bg-[var(--accent)] px-7 text-[10px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[var(--accent-strong)] focus-visible:outline-offset-4">Send message <span className="ml-3">↗</span></button>
+            {sent && <p role="status" className="text-xs text-[var(--muted)]">Your email app should open with the message details. If it doesn’t, email support@rysewears.com directly.</p>}
+          </form>
+        </div>
+      </section>
       <Footer />
-    </div>
+    </main>
   );
 }
