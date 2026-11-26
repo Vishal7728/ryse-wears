@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { Lato, Montserrat } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import { DarkModeProvider } from "../context/DarkModeContext";
 import CookieConsent from "../components/CookieConsent";
-import DarkModePattern from "../components/DarkModePattern";
-import AIChatWidget from "../components/AIChatWidget";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -44,13 +41,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={lato.variable + " " + montserrat.variable + " antialiased"}>
-        <Script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" strategy="lazyOnload" />
         <DarkModeProvider>
           <CartProvider>
-            <DarkModePattern />
             <div className="relative z-10">{children}</div>
             <CookieConsent />
-            <AIChatWidget />
           </CartProvider>
         </DarkModeProvider>
       </body>
